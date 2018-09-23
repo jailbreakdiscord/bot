@@ -49,5 +49,5 @@ jailbreakbot is licensed under the GNU GPL 3.0 license, please see LICENSE for m
 
 We would like to thank the following opensource libraries, for their much appreciated work:
     
-    * [discord.js](https://discord.js.org/) for an amazing Discord library
-    * [BotKit](https://github.com/dynastic/BotKit) for doing all the heavy-lifting with the command framework
+* [discord.js](https://discord.js.org/) for an amazing Discord library
+* [BotKit](https://github.com/dynastic/BotKit) for doing all the heavy-lifting with the command framework
