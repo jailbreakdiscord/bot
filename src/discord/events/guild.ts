@@ -5,10 +5,11 @@ import {
 } from "discord.js";
 
 import { Guild } from "../../database/entities";
+import { Logger } from "dd-botkit";
 
 export async function guildCreate(guild: DGuild) {
     const dbGuild = await Guild.createOrUpdate(guild);
-    console.log(`Added guild (${dbGuild.id}) to the database.`);
+    Logger.log(`Added guild (${dbGuild.id}) to the database.`);
 }
 
 export function guildDelete(guild: DGuild) {}

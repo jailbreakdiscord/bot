@@ -1,6 +1,8 @@
 import { Message as DMessage } from "discord.js";
-import { Entity, Column } from "typeorm";
+import { Entity, Column, ManyToOne, RelationId } from "typeorm";
 import { DBEntity } from "dd-botkit";
+import { Guild } from "./Guild";
+import { User } from "./User";
 
 /*
   TODO: 
@@ -9,14 +11,22 @@ import { DBEntity } from "dd-botkit";
 @Entity()
 export class Message extends DBEntity {
 
-    /// The ID of the message author
-    // TODO: When we have a User model, store a relation to this
-    @Column()
-    public authorID: string;
-
     /// The content of the message
     @Column()
     public content: string;
+
+    @ManyToOne(type => Guild, guild => guild.messages)
+    guild: Promise<Guild>;
+
+    @RelationId("guild")
+    guildID: string;
+
+    @ManyToOne(type => User, user => user.messages)
+    author: Promise<User>;
+
+    /// The ID of the message author
+    @RelationId("author")
+    authorID: string;
     
     /**
      * Creates or updates a Discord Message object.

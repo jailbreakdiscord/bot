@@ -2,6 +2,7 @@ import { startBot } from "./discord";
 import { connect } from "./database";
 
 import { bindEventHandlersToClient } from "./discord/events";
+import { Logger } from "dd-botkit";
 
 connect()
     .then(() => startBot())
@@ -12,5 +13,5 @@ connect()
         // Bind event handlers
         bindEventHandlersToClient(app.client);
         
-        console.log(`Booted successfully! Logged into discord as ${app.client.user.tag}.`);
+        Logger.log(`Booted successfully! Logged into discord as ${app.client.user.tag}.`);
 });
