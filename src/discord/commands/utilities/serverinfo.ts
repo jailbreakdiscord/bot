@@ -1,11 +1,4 @@
-import {
-    Command,
-    AccessLevel,
-    CommandError,
-    Logger,
-    Guards,
-    Constants
-} from "dd-botkit";
+import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
 import { RichEmbed } from "discord.js";
 export const ServerInfoCommand: Command = {
     opts: {
