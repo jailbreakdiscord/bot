@@ -5,14 +5,20 @@ import {
     Logger,
     Guards,
     Constants
-} from 'dd-botkit';
-import { RichEmbed } from 'discord.js';
+} from "dd-botkit";
+import { RichEmbed } from "discord.js";
 export const ServerInfoCommand: Command = {
     opts: {
-        name: 'serverinfo',
+        name: "serverinfo",
         access: AccessLevel.EVERYONE,
-        category: 'Utilities',
-        guards: [Guards.Argumented('serverinfo', 'Kicks a user', [])]
+        category: "Utilities",
+        guards: [
+            Guards.Argumented(
+                "serverinfo",
+                "Fetch general information about the server.",
+                []
+            )
+        ]
     },
     handler: async (message, next) => {
         const guild = message.guild;
@@ -21,23 +27,29 @@ export const ServerInfoCommand: Command = {
             .setAuthor(client.user.username, client.user.displayAvatarURL)
             .setFooter(Constants.BOT_AUTHOR)
             .setTimestamp()
-            .setTitle('Server Info')
-            .setDescription('General information about the server.')
-            .addField('Name', guild.name, true)
+            // Random hex color.
+            .setColor(Math.floor(Math.random() * 16777215).toString(16))
+            .setTitle("Server Info")
+            .setDescription("General information about the server.")
+            .addField("Name", guild.name, true)
+            // Could potentially be changed to some other, more readable format.
             .addField(
-                'Creation Date',
+                "Creation Date",
                 new Date(guild.createdTimestamp).toUTCString(),
                 true
             )
             .addBlankField()
-            .addField('Region', guild.region, true)
-            .addField('Verification level', guild.verificationLevel, true)
+            .addField("Region", guild.region, true)
+            .addField("Verification level", guild.verificationLevel, true)
             .addBlankField()
-            .addField('Channels', guild.channels.size, true)
-            .addField('Roles', guild.roles.size, true)
+            .addField("Channels", guild.channels.size, true)
+            .addField("Roles", guild.roles.size, true)
             .addBlankField()
-            .addField('Owner', guild.owner.user.tag, true)
-            .addField('Members', guild.memberCount, true);
-        message.channel.send(embed);
+            .addField("Owner", guild.owner.user.tag, true)
+            .addField("Members", guild.memberCount, true);
+        //TODO: output to console using logger instead of throwing the error.
+        message.channel.send(embed).catch((err) => {
+            throw err;
+        });
     }
 };
