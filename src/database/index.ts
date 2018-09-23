@@ -1,12 +1,10 @@
-import { createConnection } from "typeorm";
+import { createConnection } from 'typeorm';
 
-import { Configuration } from "../Config";
+import { Configuration } from '../Config';
 
 export function connect() {
     return createConnection({
-        entities: [
-            __dirname + "/entities/*.js"
-        ],
+        entities: [__dirname + '/entities/*.js'],
         ...Configuration.database
     });
 }
