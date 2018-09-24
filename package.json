@@ -13,7 +13,7 @@
   },
   "private": false,
   "dependencies": {
-    "dd-botkit": "^1.0.0",
+    "dd-botkit": "^1.0.9",
     "pg": "^7.4.3",
     "typeorm": "^0.2.7"
   },
