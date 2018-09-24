@@ -27,17 +27,19 @@ export const KickCommand: Command = {
         ]
     },
     handler: async (message, next) => {
-        //TODO: change type from any to User.
-        let [_user]: any | User = message.args;
+        // Define constants for ease of accesss.
         const client = message.client;
+        const guild = message.guild;
+
+        //TODO: change type from any to User.
+        // Simple hack to avoid TypeErrors
+        let [_user]: any | User = message.args;
         let user: User = _user;
         let member: GuildMember = message.guild.members.get(user.id)!;
         if (!_user) {
             user = message.author;
             member = message.member;
         }
-        console.log(new Date(user.createdTimestamp).toUTCString());
-        const guild = message.guild;
         const embed = new RichEmbed()
             .setAuthor(client.user.username, client.user.displayAvatarURL)
             .setFooter(Constants.BOT_AUTHOR)
@@ -65,8 +67,8 @@ export const KickCommand: Command = {
             .addBlankField()
             .addField("Roles", member.roles.map((x) => x), true)
             .addBlankField()
-            .addField("Highest role", member.highestRole.name, true)
-            .addField("Members", guild.memberCount, true);
+            .addField("Highest role", member.highestRole, true)
+            .addField("Member count", guild.memberCount, true);
         //TODO: output to console using logger instead of throwing the error.
         message.channel.send(embed).catch((err) => {
             throw err;
