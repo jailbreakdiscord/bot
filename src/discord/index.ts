@@ -5,7 +5,7 @@ import { Configuration } from "../Config";
 
 const config = Configuration.bot;
 export const app = new Application({
-    token: config.token,
+    token: config.token, 
     commandDirectory: path.resolve(__dirname, "commands"),
     ROLES: config.roles,
     COMMAND_PREFIX: config.prefix
