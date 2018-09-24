@@ -24,10 +24,7 @@ export const KickCommand: Command = {
     handler: async (msg, next) => {
         const [user, reason] = msg.args;
 
-        await msg.reply(
-            `And this is the point where I'd usually kick <@${
-                (user as any).id
-            }> for ${reason || "no reason"} but i'm in debug mode.`
-        );
+        // prettier-ignore
+        await msg.reply(`And this is the point where I'd usually kick <@${(user as any).id}> for ${reason || "no reason"} but i'm in debug mode.`);
     }
 };
