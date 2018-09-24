@@ -34,11 +34,14 @@ export const KickCommand: Command = {
         //TODO: change type from any to User.
         // Simple hack to avoid TypeErrors
         let [_user]: any | User = message.args;
-        let user: User = _user;
-        let member: GuildMember = message.guild.members.get(user.id)!;
+        let user: User;
+        let member: GuildMember;
         if (!_user) {
             user = message.author;
             member = message.member;
+        } else {
+            user = _user;
+            member = message.guild.members.get(_user.id)!;
         }
         const embed = new RichEmbed()
             .setAuthor(client.user.username, client.user.displayAvatarURL)
