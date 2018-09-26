@@ -1,11 +1,4 @@
-import {
-    Command,
-    AccessLevel,
-    CommandError,
-    Logger,
-    Guards,
-    Constants
-} from "dd-botkit";
+import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
 import { RichEmbed, User, GuildMember } from "discord.js";
 export const KickCommand: Command = {
     opts: {
@@ -52,6 +45,7 @@ export const KickCommand: Command = {
             .setColor(Math.floor(Math.random() * 16777215).toString(16))
             .setTitle("User Info")
             .setDescription(`General information about \`${user.username}\`.`)
+            .setThumbnail(user.displayAvatarURL)
             .addField("Tag", user.tag, true)
 
             // Could potentially be changed to some other, more readable format.
@@ -72,7 +66,6 @@ export const KickCommand: Command = {
             .addBlankField()
             .addField("Highest role", member.highestRole, true)
             .addField("Member count", guild.memberCount, true);
-        //TODO: output to console using logger instead of throwing the error.
         await message.channel.send(embed);
     }
 };
