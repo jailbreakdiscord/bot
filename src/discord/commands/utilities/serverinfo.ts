@@ -24,6 +24,7 @@ export const ServerInfoCommand: Command = {
             .setColor(Math.floor(Math.random() * 16777215).toString(16))
             .setTitle("Server Info")
             .setDescription("General information about the server.")
+            .setThumbnail(guild.iconURL)
             .addField("Name", guild.name, true)
             // Could potentially be changed to some other, more readable format.
             .addField(
