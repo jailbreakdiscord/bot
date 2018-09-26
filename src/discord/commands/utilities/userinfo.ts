@@ -73,8 +73,6 @@ export const KickCommand: Command = {
             .addField("Highest role", member.highestRole, true)
             .addField("Member count", guild.memberCount, true);
         //TODO: output to console using logger instead of throwing the error.
-        message.channel.send(embed).catch((err) => {
-            throw err;
-        });
+        await message.channel.send(embed);
     }
 };
