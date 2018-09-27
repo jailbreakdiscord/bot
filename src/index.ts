@@ -5,15 +5,17 @@ import { bindEventHandlersToClient } from "./discord/events";
 import { Logger } from "dd-botkit";
 
 connect()
-  .then(() => startBot())
-  .then(app => {
-    // FIXME: Replace this when BotKit allows turning off default commands
-    delete app.commandSystem.commands["unicode-emoji"];
+    .then(() => startBot())
+    .then((app) => {
+        // FIXME: Replace this when BotKit allows turning off default commands
+        delete app.commandSystem.commands["unicode-emoji"];
 
-    // Bind event handlers
-    bindEventHandlersToClient(app.client);
+        // Bind event handlers
+        bindEventHandlersToClient(app.client);
 
-    Logger.log(
-      `Booted successfully! Logged into discord as ${app.client.user.tag}.`
-    );
-  });
+        Logger.log(
+            `Booted successfully! Logged into discord as ${
+                app.client.user.tag
+            }.`
+        );
+    });
