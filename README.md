@@ -3,13 +3,14 @@
 A moderation and multi purpose bot by the Jailbreak Discord staff team, for use by everyone.
 
 ## Getting Started
-###### Before you host your own version, please consider using our hosted version. (*coming soon*)
+
+###### Before you host your own version, please consider using our hosted version. (_coming soon_)
 
 ### Prerequisites
 
-* An instance of postgres running locally
-* A discord bot token
-* The latest stable version of Node, and either yarn or npm (yarn is preferred)
+- An instance of postgres running locally
+- A discord bot token
+- The latest stable version of Node, and either yarn or npm (yarn is preferred)
 
 ### Installing
 
@@ -22,6 +23,12 @@ A moderation and multi purpose bot by the Jailbreak Discord staff team, for use 
 
 1. Follow instructions from installing
 2. Run `yarn dev` to run the bot
+
+### Prettier configuration
+
+- We use [Prettier](https://prettier.io/) to format our code.
+- The `prettify` script will format all \*.ts files in the project according to some predefined rules (see [.prettierrc](.prettierrc))
+- The `dev` script will also format all files.
 
 ### Deploying
 
@@ -48,6 +55,6 @@ jailbreakbot is licensed under the GNU GPL 3.0 license, please see LICENSE for m
 ## Acknowledgments
 
 We would like to thank the following opensource libraries, for their much appreciated work:
-    
-* [discord.js](https://discord.js.org/) for an amazing Discord library
-* [BotKit](https://github.com/dynastic/BotKit) for doing all the heavy-lifting with the command framework
+
+- [discord.js](https://discord.js.org/) for an amazing Discord library
+- [BotKit](https://github.com/dynastic/BotKit) for doing all the heavy-lifting with the command framework
