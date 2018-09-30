@@ -6,10 +6,10 @@ import { Logger } from "dd-botkit";
 
 connect()
     .then(() => startBot())
-    .then(app => {
+    .then((app) => {
         // FIXME: Replace this when BotKit allows turning off default commands
         delete app.commandSystem.commands["unicode-emoji"];
-
+  
         // Bind event handlers
         bindEventHandlersToClient(app.client);
         

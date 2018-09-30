@@ -1,8 +1,4 @@
-import { 
-    Command, AccessLevel,
-    CommandError, Logger,
-    Guards
-} from "dd-botkit";
+import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
 
 export const TestCommand: Command = {
     opts: {
@@ -11,4 +7,4 @@ export const TestCommand: Command = {
     handler: async (msg, next) => {
         await msg.reply("Screwa youa i hate aaron and logan.");
     }
-}
+};
