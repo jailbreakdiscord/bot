@@ -1,8 +1,4 @@
-import {
-    Command, AccessLevel,
-    CommandError, Logger,
-    Guards
-} from "dd-botkit";
+import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
 
 export const NicknameCommand: Command = {
     opts: {
@@ -13,24 +9,31 @@ export const NicknameCommand: Command = {
             Guards.Argumented(
                 "nickname",
                 "Force changes the nickname of a user",
-                [{
-                    name: "user",
-                    type: "user",
-                    required: true
-                },
-                {
-                    name: "nickname",
-                    type: "string",
-                    required: true
-                }]
+                [
+                    {
+                        name: "user",
+                        type: "user",
+                        required: true
+                    },
+                    {
+                        name: "nickname",
+                        type: "string",
+                        required: true
+                    }
+                ]
             )
         ]
     },
     handler: async (msg, next) => {
         const [user, nickname] = msg.args;
+        const member = msg.guild.members.get((args[0] as User).id);
 
-          await msg.guild.members.get((user as any).id).setNickname(nickname)
-          await msg.react('✅')
-          
+        if (!member) {
+            throw new CommandError({
+                message: "Please specify a member of this guild."
+            });
+        }
+
+        await member.setNickname(nickname);
     }
-}
+};
