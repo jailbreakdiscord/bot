@@ -28,6 +28,7 @@ export const NicknameCommand: Command = {
         const [user, nickname] = msg.args;
         const member = msg.guild.members.get((args[0] as User).id);
 
+
         if (!member) {
             throw new CommandError({
                 message: "Please specify a member of this guild."
