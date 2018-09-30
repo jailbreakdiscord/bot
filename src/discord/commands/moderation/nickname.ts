@@ -29,12 +29,8 @@ export const NicknameCommand: Command = {
     handler: async (msg, next) => {
         const [user, nickname] = msg.args;
 
-        try () {
           await msg.guild.members.get((user as any).id).setNickname(nickname)
           await msg.react('✅')
-          // TODO: Add event logging.
-        } catch (e) {
-          await msg.reply(`That wasn't supposed to happen! Here's the error message for reference: ${e}`)
-        }
+          
     }
 }
