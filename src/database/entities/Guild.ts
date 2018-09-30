@@ -11,7 +11,6 @@ import { User } from "./User";
 */
 @Entity()
 export class Guild extends DBEntity {
-
     /// The name of the guild
     @Column()
     public name: string;

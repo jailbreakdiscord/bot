@@ -13,7 +13,8 @@ export const app = new Application({
 
 export function startBot(): Promise<Application> {
     Constants.applyPatches({
-        BOT_ICON: "https://cdn.discordapp.com/icons/349243932447604736/d9fdba0cc7cbf5b50c8db2a919de91da.jpg",
+        BOT_ICON:
+            "https://cdn.discordapp.com/icons/349243932447604736/d9fdba0cc7cbf5b50c8db2a919de91da.jpg",
         BOT_AUTHOR: "Jailbreak Staff Team"
     });
 

@@ -6,5 +6,6 @@
   "bracketSpacing": true,
   "parser": "typescript",
   "semi": true,
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "proseWrap": "never"
 }
