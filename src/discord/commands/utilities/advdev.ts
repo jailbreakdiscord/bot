@@ -30,7 +30,7 @@ export const KickCommand: Command = {
         if (!member) return;
         if (decision) {
             // Accept user.
-            await user.send(`Hi ${user.username}}\nThank you for applying to the Advanced Developer role; we appreciate your work and enthusiasm. We are incredibly happy to inform you that your application has been approved 🎉. `);
+            await user.send(`Hi ${user.username}}\nThank you for applying to the Advanced Developer role; we appreciate your work and enthusiasm. We are incredibly happy to inform you that your application has been approved 🎉. As you may know, this gives you access to #developer-backroom.\nThis channel is locked to the public, and nothing is to be leaked, without a developer's or and administrators permission. If you are caught sharing secret information, we will make the necessary decisions about your punishment.`);
             await member.addRole("Advanced Developers");
             return message.success();
         }
