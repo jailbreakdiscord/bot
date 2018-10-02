@@ -36,5 +36,6 @@ export const NicknameCommand: Command = {
         }
 
         await member.setNickname(nickname);
+        await msg.success();
     }
 };
