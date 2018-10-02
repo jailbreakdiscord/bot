@@ -1,5 +1,5 @@
 import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
-
+import { GuildMember } from "discord.js";
 export const KickCommand: Command = {
     opts: {
         name: "kick",
@@ -9,7 +9,7 @@ export const KickCommand: Command = {
             Guards.Argumented("kick", "Kicks a user", [
                 {
                     name: "user",
-                    type: "user",
+                    type: "member",
                     required: true
                 },
                 {
@@ -21,10 +21,11 @@ export const KickCommand: Command = {
             ])
         ]
     },
-    handler: async (msg, next) => {
-        const [user, reason] = msg.args;
-
-        // prettier-ignore
-        await msg.reply(`And this is the point where I'd usually kick <@${(user as any).id}> for ${reason || "no reason"} but i'm in debug mode.`);
+    handler: async (message, next) => {
+        const [_member, reason]: any | GuildMember = message.args;
+        const member: GuildMember = _member;
+        if (!member.kickable) return message.fail();
+        await member.send(`You were kicked with reason: ${reason}.`);
+        await member.kick(reason);
     }
 };
