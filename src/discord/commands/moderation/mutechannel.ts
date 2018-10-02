@@ -1,4 +1,4 @@
-import { Command, AccessLevel, Guards } from "dd-botkit";
+import { Command, AccessLevel, Guards, CommandError } from "dd-botkit";
 import { GuildChannel } from "discord.js"
 export const MuteChannelCommand: Command = {
     opts: {
@@ -17,13 +17,19 @@ export const MuteChannelCommand: Command = {
     },
     handler: async (message) => {
     const [channel] :  any | GuildChannel = message.args
-    mutechannel(channel ? channel : message.channel)
+    try {
+   await mutechannel(channel ? channel : message.channel,message)
+    }
+    catch(err){
+        throw new CommandError(err)
+    }
+
   }
 };
 
-function mutechannel(channel){
-    channel.overwritePermissions(channel.guild.defaultRole,{
+async function mutechannel(channel,message){
+    await channel.overwritePermissions(channel.guild.defaultRole,{
         'SEND_MESSAGES': false,
        'ADD_REACTIONS': false
-       }).catch(console.error);
+       })
 }
