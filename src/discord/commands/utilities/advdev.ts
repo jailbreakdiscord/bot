@@ -29,10 +29,15 @@ export const KickCommand: Command = {
         const member = message.guild.members.get(user.id);
         if (!member) return;
         if (decision) {
-            await user.send("some message to accept");
+            // Accept user.
+            await user.send(`Hi ${user.username}}\nThank you for applying to the Advanced Developer role; we appreciate your work and enthusiasm. We are incredibly happy to inform you that your application has been approved 🎉. `);
             await member.addRole("Advanced Developers");
             return message.success();
         }
-        await user.send("some message declining developer");
+        // Reject user.
+        await user.send(`Hi ${user.username}\nThank you for applying for the Advanced Developer role; we appreciate your work and enthusiasm. We regret to inform you that your application for Advanced Developer was not accepted at this time, as unfortunately, we are not able to accept every application. We loved reading over your application, and encourage you to re-apply when you feel that you meet the criteria; you're more than welcome to do this in a months time. We look forward to see you in #development, and you'll still retain your Developer role. 
+
+        Best regards, 
+        the /r/jailbreak discord staff`);
     }
 };
