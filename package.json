@@ -1,0 +1,24 @@
+{
+  "name": "jailbreakbot",
+  "version": "1.0.0",
+  "description": "A general purpose bot built for the /r/jailbreak discord.",
+  "main": "dist/index.js",
+  "repository": "git@github.com:jailbreakdiscord/bot.git",
+  "author": "Jailbreak Discord Staff",
+  "license": "GPL-3.0",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc -p .",
+    "dev": "yarn prettify && yarn build && yarn start",
+    "prettify": "prettier --write \"**/*.ts\""
+  },
+  "private": false,
+  "dependencies": {
+    "dd-botkit": "^1.0.0",
+    "pg": "^7.4.3",
+    "typeorm": "^0.2.7"
+  },
+  "devDependencies": {
+    "typescript": "^3.0.3"
+  }
+}

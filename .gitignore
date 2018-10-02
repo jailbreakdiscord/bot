@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+dist/*
+.vscode/
+src/Config.ts
+yarn-error.log
+**/Config.ts
+/yarn-offline-cache
