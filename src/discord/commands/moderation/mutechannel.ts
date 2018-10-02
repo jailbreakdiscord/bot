@@ -6,7 +6,7 @@ export const MuteChannelCommand: Command = {
         access: AccessLevel.ADMIN,
         category: "Utilities",
         guards: [
-            Guards.Argumented("mutechannel", "Revokes SEND_MESSAGES permissions from @everyone.", [
+            Guards.Argumented("mutechannel", "Revokes SEND_MESSAGES and ADD_REACTIONS permissions from @everyone.", [
                 {
                     name: "channel",
                     type: "channel",
@@ -18,7 +18,7 @@ export const MuteChannelCommand: Command = {
     handler: async (message) => {
     const [channel] :  any | GuildChannel = message.args
     try {
-   await mutechannel(channel ? channel : message.channel,message)
+   await mutechannel(channel ? channel : message.channel)
     }
     catch(err){
         throw new CommandError(err)
@@ -27,7 +27,7 @@ export const MuteChannelCommand: Command = {
   }
 };
 
-async function mutechannel(channel,message){
+async function mutechannel(channel){
     await channel.overwritePermissions(channel.guild.defaultRole,{
         'SEND_MESSAGES': false,
        'ADD_REACTIONS': false
