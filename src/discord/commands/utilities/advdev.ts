@@ -3,7 +3,7 @@ import { User } from "discord.js";
 export const KickCommand: Command = {
     opts: {
         name: "advdev",
-        access: AccessLevel.MODERATOR,
+        access: AccessLevel.ADMIN,
         category: "Utilities",
         guards: [
             Guards.Argumented("kick", "Kicks a user", [
@@ -29,10 +29,10 @@ export const KickCommand: Command = {
         const member = message.guild.members.get(user.id);
         if (!member) return;
         if (decision) {
-            user.send("some message to accept");
-            member.addRole("Advanced Developers");
+            await user.send("some message to accept");
+            await member.addRole("Advanced Developers");
             return message.success();
         }
-        user.send("some message declining developer");
+        await user.send("some message declining developer");
     }
 };
