@@ -26,7 +26,7 @@ export const NicknameCommand: Command = {
     },
     handler: async (msg, next) => {
         const [user, nickname] = msg.args;
-        const member = msg.guild.members.get((args[0] as User).id);
+        const member = msg.guild.members.get((msg.args[0] as User).id);
 
 
         if (!member) {
