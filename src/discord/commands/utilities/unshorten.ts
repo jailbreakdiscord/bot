@@ -1,6 +1,6 @@
 import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
 import { RichEmbed } from "discord.js";
-impoort { checkSpoopy } from "spoopylink";
+import { checkSpoopy } from "spoopylink";
 export const UnshortenCommand: Command = {
     opts: {
         name: "unshorten",
@@ -31,9 +31,9 @@ export const UnshortenCommand: Command = {
 
         const spoop = await checkSpoopy(link)
         const embed = new RichEmbed()
-        .setTitle(`${spoop.safe = false ? "Unsafe link/redirect detected" : "Safe link detected"}`)
+        .setTitle(`${spoop.safe = false ? "Unsafe link detected" : "Safe link detected"}`)
         .setColor(`${spoop.safe = false ? 0xFF0000 : 0x00ee00}`)
-
+        .
         await message.channel.send(embed);
     }
 };
