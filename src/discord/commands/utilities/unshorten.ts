@@ -35,10 +35,14 @@ export const UnshortenCommand: Command = {
         .setColor(`${spoop.safe ==== false ? 0xFF0000 : 0x00ee00}`);
         .addField(
           "URL + Redirect Safety",
-          `${spoop.urlSafe = false ? 'This URL is not safe.' : 'This URL is deemed safe.'}\n${spoop.safe = false ? 'This URL is not safe.' : 'This URL is deemed safe.'}`,
+          `${spoop.urlSafe = false ? 'This URL is not safe.' : 'This URL is deemed safe.'}\n${spoop.safe = false ? 'This URL and its redirects are not safe.' : 'This URL and its redirects are deemed safe.'}`,
           true
-        )
-        (spoop. = false ? 0xFF0000 : 0x00ee00)
+        );
+        .addField(
+          "Redirects",
+          `${spoop.redirects[0] ? spoop.redirects[0] : 'This URL has no redirects.'}`,
+          true
+        );
         await message.channel.send(embed);
     }
 };
