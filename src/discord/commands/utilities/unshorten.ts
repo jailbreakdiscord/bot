@@ -31,9 +31,14 @@ export const UnshortenCommand: Command = {
 
         const spoop = await checkSpoopy(link)
         const embed = new RichEmbed()
-        .setTitle(`${spoop.safe = false ? "Unsafe link detected" : "Safe link detected"}`)
-        .setColor(`${spoop.safe = false ? 0xFF0000 : 0x00ee00}`)
-        .
+        .setTitle(`${spoop.safe === false ? "Unsafe link detected" : "Safe link detected"}`);
+        .setColor(`${spoop.safe ==== false ? 0xFF0000 : 0x00ee00}`);
+        .addField(
+          "URL + Redirect Safety",
+          `${spoop.urlSafe = false ? 'This URL is not safe.' : 'This URL is deemed safe.'}\n${spoop.safe = false ? 'This URL is not safe.' : 'This URL is deemed safe.'}`,
+          true
+        )
+        (spoop. = false ? 0xFF0000 : 0x00ee00)
         await message.channel.send(embed);
     }
 };
