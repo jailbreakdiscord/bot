@@ -25,5 +25,5 @@ export class MemeManager {
             });
         });
     }
-    FetchImage() {}
+    AddText() {}
 }

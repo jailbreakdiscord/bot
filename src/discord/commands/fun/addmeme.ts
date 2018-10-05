@@ -49,37 +49,44 @@ export const KickCommand: Command = {
                 message: "Please choose a valid type. (image or text)"
             });
         }
-        if (!url && !message.attachments.first()) {
-            throw new CommandError({
-                message: "Please attach an image or specify a URL."
-            });
-        }
-        let ext = "";
-        if (!url) {
-            url = message.attachments.first().url;
-            ext = extname(message.attachments.first().filename);
-        } else {
-            ext = extname(url.substring(url.lastIndexOf("/") + 1));
-        }
-        const embed = new RichEmbed()
-            .setAuthor(client.user.username, client.user.displayAvatarURL)
-            .setFooter(Constants.BOT_AUTHOR)
-            .setTimestamp()
-            // Random hex color.
-            .setColor(Math.floor(Math.random() * 16777215).toString(16))
-            .setTitle("Add meme");
+        if (type === "image") {
+            if (!url && !message.attachments.first()) {
+                throw new CommandError({
+                    message: "Please attach an image or specify a URL."
+                });
+            }
+            let ext = "";
+            if (!url) {
+                url = message.attachments.first().url;
+                ext = extname(message.attachments.first().filename);
+            } else {
+                ext = extname(url.substring(url.lastIndexOf("/") + 1));
+            }
+            const embed = new RichEmbed()
+                .setAuthor(client.user.username, client.user.displayAvatarURL)
+                .setFooter(Constants.BOT_AUTHOR)
+                .setTimestamp()
+                // Random hex color.
+                .setColor(Math.floor(Math.random() * 16777215).toString(16))
+                .setTitle("Add meme");
 
-        MemeManager.AddImage(url, name, ext)
-            .then((e) => {
-                embed.setDescription(`Successfully added meme: ${name}.`);
-            })
-            .catch((err) => {
-                if (err.name == "TypeError") {
-                    return embed.setDescription("Please specify a valid URL.");
-                }
-                return embed.setDescription("Meme already exists.");
-            })
-            // ESNEXT FTW
-            .finally(() => message.channel.send(embed));
+            MemeManager.AddImage(url, name, ext)
+                .then((e) => {
+                    embed.setDescription(`Successfully added meme: ${name}.`);
+                })
+                .catch((err) => {
+                    if (err.name == "TypeError") {
+                        return embed.setDescription(
+                            "Please specify a valid URL."
+                        );
+                    }
+                    return embed.setDescription("Meme already exists.");
+                })
+                // ESNEXT FTW
+                .finally(() => message.channel.send(embed));
+        } else {
+            //TODO: create AddText and manage the meme input if it is in fact text.
+            MemeManager.AddText;
+        }
     }
 };
