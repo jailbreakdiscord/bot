@@ -1,41 +1,36 @@
-import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
+import { Command, AccessLevel, Guards, CommandError } from "dd-botkit";
+import { GuildMember } from "discord.js"
 
-export const NicknameCommand: Command = {
+export const NickCommand: Command = {
     opts: {
-        name: "nickname",
+        name: "nick",
         access: AccessLevel.MODERATOR,
-        category: "Moderation",
+        category: "Utilities",
         guards: [
-            Guards.Argumented(
-                "nickname",
-                "Force changes the nickname of a user",
-                [
-                    {
-                        name: "user",
-                        type: "user",
-                        required: true
-                    },
-                    {
-                        name: "nickname",
-                        type: "string",
-                        required: true
-                    }
-                ]
-            )
+            Guards.Argumented("nick", "Change a member's nickname", [
+                {
+                    name: "member",
+                    type: "member",
+                    required: true
+                },
+                {
+                    name: "nickname",
+                    type: "string",
+                    required: false,
+                    unlimited: true
+                }
+            ])
         ]
     },
-    handler: async (msg, next) => {
-        const [user, nickname] = msg.args;
-        const member = msg.guild.members.get((user as User).id);
-
-
-        if (!member) {
-            throw new CommandError({
-                message: "Please specify a member of this guild."
-            });
+    handler: async (message) => {
+        const [member,nickname] : GuildMember | any = message.args
+        try {
+            await member.setNickname(nickname ? nickname : message.author.username,'Executed by ' + `${message.author.username}(${message.author.id})`)
+            await message.success();
         }
-
-        await member.setNickname(nickname);
-        await msg.success();
-    }
+        catch(err){
+            await message.fail()
+            throw new CommandError(err)
+        }
+  }
 };
