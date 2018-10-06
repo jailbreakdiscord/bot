@@ -1,11 +1,11 @@
 language: node_js
 node_js:
   - "node"
-  
+
 cache: yarn
 
 before_script:
-  - yarn
+  - cp src/Config.example.ts src/Config.ts
 
 script:
   - yarn build
