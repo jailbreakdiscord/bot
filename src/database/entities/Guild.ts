@@ -11,20 +11,6 @@ import { User } from "./User";
 */
 @Entity()
 export class Guild extends DBEntity {
-    /// The name of the guild
-    @Column()
-    public name: string;
-
-    /// The ID of the guild owner
-    // TODO: When we have a User model, store a relation to this
-    @Column()
-    public ownerID: string;
-
-    @OneToMany(type => Message, message => message.guild)
-    messages: Promise<Message[]>;
-
-    @ManyToMany(type => User, user => user.guilds)
-    members: Promise<User[]>;
     
     /**
      * Creates or updates a Discord Guild object.
@@ -40,6 +26,20 @@ export class Guild extends DBEntity {
 
         guild.name = discordGuild.name;
         guild.ownerID = discordGuild.ownerID;
-        return await guild.save();
+        return guild.save();
     }
+    /// The name of the guild
+    @Column()
+    public name: string;
+
+    /// The ID of the guild owner
+    // TODO: When we have a User model, store a relation to this
+    @Column()
+    public ownerID: string;
+
+    @OneToMany(type => Message, message => message.guild)
+    public messages: Promise<Message[]>;
+
+    @ManyToMany(type => User, user => user.guilds)
+    public members: Promise<User[]>;
 }

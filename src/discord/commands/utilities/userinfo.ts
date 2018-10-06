@@ -24,9 +24,9 @@ export const KickCommand: Command = {
         const client = message.client;
         const guild = message.guild;
 
-        //TODO: change type from any to User.
+        // TODO: change type from any to User.
         // Simple hack to avoid TypeErrors
-        let [_user]: any | User = message.args;
+        const [_user]: any | User = message.args;
         let user: User;
         let member: GuildMember;
         if (!_user) {
