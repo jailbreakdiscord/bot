@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc -p .",
-    "dev": "yarn build && yarn start",
+    "dev": "yarn lint-and-fix && yarn build && yarn start",
     "lint": "tslint -p .",
     "lint-and-fix": "tslint -p . --fix"
   },
