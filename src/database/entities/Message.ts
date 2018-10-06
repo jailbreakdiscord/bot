@@ -10,23 +10,6 @@ import { User } from "./User";
 */
 @Entity()
 export class Message extends DBEntity {
-
-    /// The content of the message
-    @Column()
-    public content: string;
-
-    @ManyToOne(type => Guild, guild => guild.messages)
-    guild: Promise<Guild>;
-
-    @RelationId("guild")
-    guildID: string;
-
-    @ManyToOne(type => User, user => user.messages)
-    author: Promise<User>;
-
-    /// The ID of the message author
-    @RelationId("author")
-    authorID: string;
     
     /**
      * Creates or updates a Discord Message object.
@@ -43,6 +26,23 @@ export class Message extends DBEntity {
         message.authorID = discordMessage.author.id;
         message.content = discordMessage.content;
 
-        return await message.save();
+        return message.save();
     }
+
+    /// The content of the message
+    @Column()
+    public content: string;
+
+    @ManyToOne(type => Guild, guild => guild.messages)
+    public guild: Promise<Guild>;
+
+    @RelationId("guild")
+    public guildID: string;
+
+    @ManyToOne(type => User, user => user.messages)
+    public author: Promise<User>;
+
+    /// The ID of the message author
+    @RelationId("author")
+    public authorID: string;
 }
