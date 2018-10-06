@@ -150,7 +150,7 @@ cycle@1.0.x:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
 
-dd-botkit@^1.0.9:
+dd-botkit@^1.0.9-1:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/dd-botkit/-/dd-botkit-1.0.9.tgz#b255e62357e032e839eae48071ff9b434bc53efd"
   dependencies:

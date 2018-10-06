@@ -24,6 +24,7 @@ export const ServerInfoCommand: Command = {
             .setColor(Math.floor(Math.random() * 16777215).toString(16))
             .setTitle("Server Info")
             .setDescription("General information about the server.")
+            .setThumbnail(guild.iconURL)
             .addField("Name", guild.name, true)
             // Could potentially be changed to some other, more readable format.
             .addField(
@@ -41,8 +42,6 @@ export const ServerInfoCommand: Command = {
             .addField("Owner", guild.owner.user.tag, true)
             .addField("Members", guild.memberCount, true);
         //TODO: output to console using logger instead of throwing the error.
-        message.channel.send(embed).catch((err) => {
-            throw err;
-        });
+        await message.channel.send(embed);
     }
 };
