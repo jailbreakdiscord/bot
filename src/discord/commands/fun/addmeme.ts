@@ -40,10 +40,9 @@ export const KickCommand: Command = {
     handler: async (message, next) => {
         const [_type, _name, _url]: any = message.args;
         const client = message.client;
-        let type = _type,
-            name = _name,
-            url = _url;
-        console.log(type);
+        const type = _type;
+        const name = _name;
+        let url = _url;
         if (type !== "image" && type !== "text") {
             throw new CommandError({
                 message: "Please choose a valid type. (image or text)"
@@ -75,7 +74,7 @@ export const KickCommand: Command = {
                     embed.setDescription(`Successfully added meme: ${name}.`);
                 })
                 .catch((err) => {
-                    if (err.name == "TypeError") {
+                    if (err.name === "TypeError") {
                         return embed.setDescription(
                             "Please specify a valid URL."
                         );
