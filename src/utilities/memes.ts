@@ -30,7 +30,7 @@ export class MemeManager {
             });
         });
     }
-    //FIXME: finish writing this method
+
     FetchImage(name: string): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             let dirCont = readdirSync(this.MEME_PATH);

@@ -1,11 +1,9 @@
 import { startBot } from "./discord";
 import { connect } from "./database";
-import { MemeManager as _MemeManager } from "./utilities/memes";
+import { MemeManager as UMemeManager } from "./utilities/memes";
 import { bindEventHandlersToClient } from "./discord/events";
 import { Logger } from "dd-botkit";
-const MemeManager = new _MemeManager();
-
-// tslint:disable-next-line
+const MemeManager = new UMemeManager();
 connect()
     .then(() => startBot())
     .then((app) => {
