@@ -85,8 +85,8 @@ export const KickCommand: Command = {
                 // ESNEXT FTW
                 .finally(() => message.channel.send(embed));
         } else {
-            //TODO: create AddText and manage the meme input if it is in fact text.
-            MemeManager.AddText;
+            // TODO: create AddText and manage the meme input if it is in fact text.
+            // MemeManager.AddText;
         }
     }
 };

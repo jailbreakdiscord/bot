@@ -16,6 +16,4 @@ connect()
         Logger.log(`Booted successfully! Logged into discord as ${app.client.user.tag}.`);
     });
 
-process.on("unhandledRejection", console.error);
-
 export { MemeManager };
