@@ -1,3 +1,6 @@
+// Disable TSLint for now, as these blocks are empty
+/* tslint:disable */
+
 import { 
     Guild as DGuild, 
     User as DUser,

@@ -4,6 +4,8 @@ import { MemeManager as _MemeManager } from "./utilities/memes";
 import { bindEventHandlersToClient } from "./discord/events";
 import { Logger } from "dd-botkit";
 const MemeManager = new _MemeManager();
+
+// tslint:disable-next-line
 connect()
     .then(() => startBot())
     .then((app) => {
@@ -12,7 +14,7 @@ connect()
 
         // Bind event handlers
         bindEventHandlersToClient(app.client);
-        //prettier-ignore
+        // prettier-ignore
         Logger.log(`Booted successfully! Logged into discord as ${app.client.user.tag}.`);
     });
 

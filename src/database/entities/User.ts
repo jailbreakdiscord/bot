@@ -6,20 +6,6 @@ import { Guild } from "./Guild";
 
 @Entity()
 export class User extends DBEntity {
-
-    /// The user's discord username
-    @Column()
-    public username: string;
-
-    /// The user's discord discriminator
-    @Column()
-    public discriminator: string;
-
-    @OneToMany(type => Message, message => message.author)
-    messages: Promise<Message[]>;
-
-    @ManyToMany(type => Guild, guild => guild.members)
-    guilds: Promise<Guild[]>;
     
     /**
      * Creates or updates a Discord User object.
@@ -36,6 +22,20 @@ export class User extends DBEntity {
         user.username = discordUser.username;
         user.discriminator = discordUser.discriminator;
 
-        return await user.save();
+        return user.save();
     }
+
+    /// The user's discord username
+    @Column()
+    public username: string;
+
+    /// The user's discord discriminator
+    @Column()
+    public discriminator: string;
+
+    @OneToMany(type => Message, message => message.author)
+    public messages: Promise<Message[]>;
+
+    @ManyToMany(type => Guild, guild => guild.members)
+    public guilds: Promise<Guild[]>;
 }

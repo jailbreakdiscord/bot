@@ -1,7 +1,7 @@
 import { ConnectionOptions } from "typeorm";
 
 export class Configuration {
-    static bot: any = {
+    public static bot: any = {
         // The discord bot token.
         token: "", // TODO: This should eventually be per-server.
         prefix: "!", // TODO: Yet again, should be configured per server.
@@ -13,7 +13,7 @@ export class Configuration {
     };
 
     // Database configuration options.
-    static database: ConnectionOptions = {
+    public static database: ConnectionOptions = {
         type: "postgres",
         host: "localhost",
         port: 5432,
