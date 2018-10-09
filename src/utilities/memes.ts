@@ -2,6 +2,7 @@ import { join } from "path";
 import { download } from "./download-image";
 import { existsSync, mkdirSync, readdirSync } from "fs";
 import { Logger } from "dd-botkit";
+import { safify } from "./safeify-path";
 
 export class MemeManager {
     private readonly MEME_PATH: string;
@@ -18,7 +19,11 @@ export class MemeManager {
             if (!url.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
                 return reject(new TypeError("Expected URL as first parameter."));
             }
-            const path = join(this.MEME_PATH, "/", `${name}${extension}`);
+            const path = join(
+                this.MEME_PATH,
+                "/",
+                `${safify(name + extension)}`
+            );
             if (!existsSync(this.MEME_PATH)) {
                 mkdirSync(this.MEME_PATH);
             }
@@ -40,7 +45,7 @@ export class MemeManager {
                 elm.match(new RegExp(`${name}.(.*)`))
             );
             if (!files) return reject(new Error("Meme not found."));
-            return resolve(join(this.MEME_PATH, files[0]));
+            return resolve(join(this.MEME_PATH, safify(files[0])));
         });
     }
 }

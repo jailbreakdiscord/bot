@@ -72,8 +72,6 @@ export const KickCommand: Command = {
             MemeManager.AddImage(url, name, ext)
                 .then((e) => {
                     embed.setDescription(`Successfully added meme: ${name}.`);
-                }, async () => {
-                    await message.channel.send(embed);
                 })
                 .catch((err) => {
                     if (err.name === "TypeError") {
@@ -83,6 +81,10 @@ export const KickCommand: Command = {
                     }
                     embed.setDescription("Meme already exists.");
                 })
+                .then(async () => {
+                    await message.channel.send(embed);
+                })
+                .catch(() => new CommandError({ message: "No permissions." }));
         } else {
             // TODO: create AddText and manage the meme input if it is in fact text.
             // MemeManager.AddText;
