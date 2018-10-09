@@ -72,6 +72,8 @@ export const KickCommand: Command = {
             MemeManager.AddImage(url, name, ext)
                 .then((e) => {
                     embed.setDescription(`Successfully added meme: ${name}.`);
+                }, async () => {
+                    await message.channel.send(embed);
                 })
                 .catch((err) => {
                     if (err.name === "TypeError") {
@@ -79,10 +81,8 @@ export const KickCommand: Command = {
                             "Please specify a valid URL."
                         );
                     }
-                    return embed.setDescription("Meme already exists.");
+                    embed.setDescription("Meme already exists.");
                 })
-                // ESNEXT FTW
-                .finally(() => message.channel.send(embed));
         } else {
             // TODO: create AddText and manage the meme input if it is in fact text.
             // MemeManager.AddText;

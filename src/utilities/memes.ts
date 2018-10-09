@@ -1,6 +1,7 @@
 import { join } from "path";
 import { download } from "./download-image";
-import { exists, existsSync, mkdirSync, readdirSync } from "fs";
+import { existsSync, mkdirSync, readdirSync } from "fs";
+import { Logger } from "dd-botkit";
 
 export class MemeManager {
     private readonly MEME_PATH: string;
@@ -24,19 +25,21 @@ export class MemeManager {
             if (existsSync(path)) {
                 return reject(new Error("Meme already exists"));
             }
-            download(url, path).then(() => {
-                resolve(path);
-            });
+            download(url, path)
+                .then(() => {
+                    resolve(path);
+                })
+                .catch(Logger.error);
         });
     }
 
     public FetchImage(name: string): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             const dirCont = readdirSync(this.MEME_PATH);
-            const files = dirCont.filter((elm) => {
-                return elm.match(new RegExp(`${name}.(.*)`));
-            });
-            if (!files) reject(new Error("Meme not found."));
+            const files = dirCont.filter((elm) =>
+                elm.match(new RegExp(`${name}.(.*)`))
+            );
+            if (!files) return reject(new Error("Meme not found."));
             return resolve(join(this.MEME_PATH, files[0]));
         });
     }

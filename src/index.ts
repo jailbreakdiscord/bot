@@ -14,6 +14,7 @@ connect()
         bindEventHandlersToClient(app.client);
         // prettier-ignore
         Logger.log(`Booted successfully! Logged into discord as ${app.client.user.tag}.`);
-    });
+    })
+    .catch(Logger.error);
 
 export { MemeManager };

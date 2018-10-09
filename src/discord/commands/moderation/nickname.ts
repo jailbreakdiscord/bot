@@ -26,10 +26,9 @@ export const NicknameCommand: Command = {
     },
     handler: async (msg, next) => {
         const [user, nickname] = msg.args;
-        
+
         // FIXME: Types here are completely wrong.
         const member = msg.guild.members.get((user as any).id);
-
 
         if (!member) {
             throw new CommandError({
@@ -37,7 +36,7 @@ export const NicknameCommand: Command = {
             });
         }
 
-        await member.setNickname(nickname);
+        await member.setNickname(nickname as any);
         await msg.success();
     }
 };

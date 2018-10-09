@@ -31,7 +31,7 @@ export const KickCommand: Command = {
         } catch (error) {
             return message.reply("meme not found.");
         }
-        message.channel.send({
+        await message.channel.send({
             files: [new Attachment(memePath)]
         });
     }
