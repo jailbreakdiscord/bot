@@ -28,10 +28,10 @@ export const KickCommand: Command = {
     },
     handler: async (msg, next) => {
         if (
-            msg.guild.id == "349243932447604736" ||
-            msg.guild.id == "493378389802090498"
+            msg.guild.id === "349243932447604736" ||
+            msg.guild.id === "493378389802090498"
         ) {
-            return await msg.fail();
+            return msg.fail();
         }
         // decision == false - decline
         // decision == true - accept
@@ -43,15 +43,14 @@ export const KickCommand: Command = {
         }
         if (decision) {
             // accept user
-            await user.send(
-                oneLine`Hi ${
-                    user.username
-                }}\nThank you for applying to the Advanced Developer role; we appreciate your work and enthusiasm.
+            // prettier-ignore
+            await user.send(oneLine`Hi ${user.username}}\nThank you for applying to the Advanced Developer role; we appreciate your work and enthusiasm.
                 We are incredibly happy to inform you that your application has been approved 🎉.
                 As you may know, this gives you access to #developer-backroom.\n
-                This channel is locked to the public, and nothing is to be leaked, without a developer's or and administrators permission.
-                If you are caught sharing secret information, we will make the necessary decisions about your punishment.`
-            );
+                This channel is locked to the public, and nothing is to be leaked, without a developer's or and administrator's permission.
+                If you are caught sharing secret information, we will make the necessary decisions about your punishment.
+                Best regards,
+                the /r/jailbreak Discord staff`);
             await member.addRole("Advanced Developers");
             return msg.success();
         }
@@ -65,6 +64,6 @@ export const KickCommand: Command = {
         you're more than welcome to do this in a months time. We look forward to see you in #development, and you'll still retain your Developer role. 
 
         Best regards, 
-        the /r/jailbreak discord staff`);
+        the /r/jailbreak Discord staff`);
     }
 };
