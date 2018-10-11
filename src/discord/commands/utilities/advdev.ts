@@ -1,12 +1,7 @@
 import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
-<<<<<<< HEAD
 import { User, GuildMember } from "discord.js";
 import { oneLine } from "common-tags";
 export const KickCommand: Command = {
-=======
-import { User } from "discord.js";
-export const AdvDevCommand: Command = {
->>>>>>> 0a07318653fe553eaad6ee7410d2dfc8c8c500c1
     opts: {
         name: "advdev",
         access: AccessLevel.ADMIN,
@@ -42,9 +37,7 @@ export const AdvDevCommand: Command = {
         // decision == true - accept
         const [decision, _user]: any | User = msg.args;
         const user: User = _user;
-        const member: GuildMember | undefined = msg.guild.members.get(
-            user.id
-        );
+        const member: GuildMember | undefined = msg.guild.members.get(user.id);
         if (!member) {
             return;
         }
