@@ -1,33 +1,48 @@
 import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
+<<<<<<< HEAD
 import { User, GuildMember } from "discord.js";
 import { oneLine } from "common-tags";
 export const KickCommand: Command = {
+=======
+import { User } from "discord.js";
+export const AdvDevCommand: Command = {
+>>>>>>> 0a07318653fe553eaad6ee7410d2dfc8c8c500c1
     opts: {
         name: "advdev",
         access: AccessLevel.ADMIN,
         category: "Utilities",
         guards: [
-            Guards.Argumented("kick", "Kicks a user", [
-                {
-                    name: "Decline or accept",
-                    type: "boolean",
-                    required: true
-                },
-                {
-                    name: "user",
-                    type: "user",
-                    required: true,
-                    unlimited: true
-                }
-            ])
+            Guards.Argumented(
+                "advdev",
+                "Decline or accept a user to advanced developer.",
+                [
+                    {
+                        name: "Decline or accept",
+                        type: "boolean",
+                        required: true
+                    },
+                    {
+                        name: "user",
+                        type: "user",
+                        required: true,
+                        unlimited: true
+                    }
+                ]
+            )
         ]
     },
-    handler: async (message, next) => {
+    handler: async (msg, next) => {
+        if (
+            msg.guild.id == "349243932447604736" ||
+            msg.guild.id == "493378389802090498"
+        ) {
+            return await msg.fail();
+        }
         // decision == false - decline
         // decision == true - accept
-        const [decision, _user]: any | User = message.args;
+        const [decision, _user]: any | User = msg.args;
         const user: User = _user;
-        const member: GuildMember | undefined = message.guild.members.get(
+        const member: GuildMember | undefined = msg.guild.members.get(
             user.id
         );
         if (!member) {
@@ -45,7 +60,7 @@ export const KickCommand: Command = {
                 If you are caught sharing secret information, we will make the necessary decisions about your punishment.`
             );
             await member.addRole("Advanced Developers");
-            return message.success();
+            return msg.success();
         }
         // reject user
         // prettier-ignore
