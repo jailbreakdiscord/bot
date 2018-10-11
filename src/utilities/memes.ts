@@ -2,7 +2,7 @@ import { join } from "path";
 import { download } from "./download-image";
 import { existsSync, mkdirSync, readdirSync } from "fs";
 import { Logger } from "dd-botkit";
-import { safify } from "./safeify-path";
+import { safifyPath } from "./safeify-path";
 
 export class MemeManager {
     private readonly MEME_PATH: string;
@@ -22,7 +22,7 @@ export class MemeManager {
             const path = join(
                 this.MEME_PATH,
                 "/",
-                `${safify(name + extension)}`
+                `${safifyPath(name + extension)}`
             );
             if (!existsSync(this.MEME_PATH)) {
                 mkdirSync(this.MEME_PATH);
@@ -45,7 +45,7 @@ export class MemeManager {
                 elm.match(new RegExp(`${name}.(.*)`))
             );
             if (!files) return reject(new Error("Meme not found."));
-            return resolve(join(this.MEME_PATH, safify(files[0])));
+            return resolve(join(this.MEME_PATH, safifyPath(files[0])));
         });
     }
 }
