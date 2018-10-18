@@ -1,10 +1,8 @@
 import { Channel, RichEmbed, Client, TextChannel } from "discord.js";
-import { Constants } from "dd-botkit";
-import { Guild } from "../../database/entities";
 import {
     IWarnLoggerOption,
     ITemporaryLoggerOption
-} from "../interfaces/ISendOption";
+} from "../interfaces/LoggerOptions";
 
 export class PublicLogger {
     public readonly _loggingChannel: TextChannel;
@@ -14,7 +12,7 @@ export class PublicLogger {
         this._client = client;
     }
     // TODO: write this method
-    public send(options: IWarnLoggerOption | ITemporaryLoggerOption) {
+    public async send(options: IWarnLoggerOption | ITemporaryLoggerOption) {
         const embed = new RichEmbed()
             .setAuthor(
                 this._client.user.username,
@@ -76,7 +74,7 @@ export class PublicLogger {
                 }
             }
         } finally {
-            this._loggingChannel.send(embed);
+            await this._loggingChannel.send(embed);
         }
     }
 }
