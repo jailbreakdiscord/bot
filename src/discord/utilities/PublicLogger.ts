@@ -1,13 +1,10 @@
-import {
-    GuildMember,
-    User,
-    Channel,
-    RichEmbed,
-    Client,
-    TextChannel
-} from "discord.js";
+import { Channel, RichEmbed, Client, TextChannel } from "discord.js";
 import { Constants } from "dd-botkit";
 import { Guild } from "../../database/entities";
+import {
+    IWarnLoggerOption,
+    ITemporaryLoggerOption
+} from "../interfaces/ISendOption";
 
 export class PublicLogger {
     public readonly _loggingChannel: TextChannel;
@@ -82,24 +79,4 @@ export class PublicLogger {
             this._loggingChannel.send(embed);
         }
     }
-}
-// TODO: move to separate files
-interface ISendOption {
-    type: "ban" | "kick" | "warn" | "mute";
-    reason: string;
-    member: GuildMember;
-    moderator: User;
-}
-/**
- * To be used for ban/kick/mute
- */
-interface ITemporaryLoggerOption extends ISendOption {
-    duration: string;
-}
-
-/**
- * To be used for warn
- */
-interface IWarnLoggerOption extends ISendOption {
-    points: number;
 }
