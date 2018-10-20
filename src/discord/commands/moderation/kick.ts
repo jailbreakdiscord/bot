@@ -1,5 +1,4 @@
 import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
-
 export const KickCommand: Command = {
     opts: {
         name: "kick",

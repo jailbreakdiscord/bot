@@ -2,7 +2,7 @@ import path from "path";
 import Application, { Constants } from "dd-botkit";
 
 import { Configuration } from "../Config";
-
+import { PublicLogger as _PublicLogger } from "./utilities/PublicLogger";
 const config = Configuration.bot;
 export const app = new Application({
     token: config.token, 
@@ -10,6 +10,9 @@ export const app = new Application({
     ROLES: config.roles,
     COMMAND_PREFIX: config.prefix
 });
+
+const PublicLogger = new _PublicLogger(app.client, "public-mod-logs");
+
 
 export function startBot(): Promise<Application> {
     Constants.applyPatches({

@@ -1,4 +1,4 @@
-import { Channel, RichEmbed, Client, TextChannel } from "discord.js";
+import { GuildChannel, RichEmbed, Client, TextChannel } from "discord.js";
 import {
     IWarnLoggerOption,
     ITemporaryLoggerOption
@@ -7,8 +7,10 @@ import {
 export class PublicLogger {
     public readonly _loggingChannel: TextChannel;
     private readonly _client: Client;
-    constructor(client: Client, channel: TextChannel) {
-        this._loggingChannel = channel;
+    constructor(client: Client, channel: string) {
+        this._loggingChannel = this._client.channels.get(
+            channel
+        )! as TextChannel;
         this._client = client;
     }
     // TODO: write this method
@@ -74,6 +76,7 @@ export class PublicLogger {
                 }
             }
         } finally {
+            // prettier-ignore
             await this._loggingChannel.send(embed);
         }
     }
