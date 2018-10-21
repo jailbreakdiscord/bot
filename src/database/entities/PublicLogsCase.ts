@@ -1,4 +1,4 @@
-import { User as DUser } from "discord.js";
+import { User as DUser, GuildMember } from "discord.js";
 import { DBEntity } from "dd-botkit";
 import {
     Entity,
@@ -10,6 +10,8 @@ import {
 } from "typeorm";
 import { Message } from "./Message";
 import { Guild } from "./Guild";
+import { LoggerOptions } from "typeorm/logger/LoggerOptions";
+import { User } from "./User";
 
 @Entity()
 export class PublicLogsCase extends DBEntity {
@@ -17,15 +19,15 @@ export class PublicLogsCase extends DBEntity {
     public reason: string;
 
     @Column()
-    public points: number | undefined;
+    public points: number;
 
     @Column()
     public type: "ban" | "kick" | "warn" | "mute";
 
-    @CreateDateColumn()
-    private createdAt: string;
-
     // Will automatically increment on every new case.
     @PrimaryGeneratedColumn()
-    private case: number;
+    public case: number;
+
+    @CreateDateColumn()
+    private createdAt: string;
 }

@@ -9,21 +9,22 @@ export class PublicLogger {
     public readonly _loggingChannel: TextChannel;
     private readonly _client: Client;
     constructor(client: Client, channel: string) {
+        this._client = client;
         this._loggingChannel = this._client.channels.get(
             channel
         )! as TextChannel;
-        this._client = client;
     }
     // TODO: write this method
     public async send(options: IWarnLoggerOption | ITemporaryLoggerOption) {
         const dbCase = new PublicLogsCase();
+        dbCase.reason = options.reason;
         const embed = new RichEmbed()
             .setAuthor(
                 this._client.user.username,
                 this._client.user.displayAvatarURL
             )
             // TODO: this is supposed to be the actual case number.
-            .setFooter("placeholder case")
+            .setFooter(dbCase.case)
             .setTimestamp()
             .addField(
                 "Member",
@@ -57,6 +58,7 @@ export class PublicLogger {
                 }
                 case "warn": {
                     dbCase.type = "warn";
+                    dbCase.points = (options as IWarnLoggerOption).points;
                     embed
                         .setTitle("Member Warned")
                         .setColor("ORANGE")
@@ -84,7 +86,7 @@ export class PublicLogger {
             }
         } finally {
             // prettier-ignore
-
+            await dbCase.save();
             await this._loggingChannel.send(embed);
         }
     }

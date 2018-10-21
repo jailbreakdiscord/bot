@@ -5,14 +5,13 @@ import { Configuration } from "../Config";
 import { PublicLogger as _PublicLogger } from "./utilities/PublicLogger";
 const config = Configuration.bot;
 export const app = new Application({
-    token: config.token, 
+    token: config.token,
     commandDirectory: path.resolve(__dirname, "commands"),
     ROLES: config.roles,
     COMMAND_PREFIX: config.prefix
 });
 
-const PublicLogger = new _PublicLogger(app.client, "public-mod-logs");
-
+let PublicLogger;
 
 export function startBot(): Promise<Application> {
     Constants.applyPatches({
@@ -21,5 +20,8 @@ export function startBot(): Promise<Application> {
         BOT_AUTHOR: "Jailbreak Staff Team"
     });
 
-    return app.init().then(() => app);
+    return app.init().then(() => {
+        PublicLogger = new _PublicLogger(app.client, "public-mod-logs");
+        return app;
+    });
 }
