@@ -3,6 +3,7 @@ import {
     IWarnLoggerOption,
     ITemporaryLoggerOption
 } from "../interfaces/LoggerOptions";
+import { PublicLogsCase } from "../../database/entities/PublicLogsCase";
 
 export class PublicLogger {
     public readonly _loggingChannel: TextChannel;
@@ -15,6 +16,7 @@ export class PublicLogger {
     }
     // TODO: write this method
     public async send(options: IWarnLoggerOption | ITemporaryLoggerOption) {
+        const dbCase = new PublicLogsCase();
         const embed = new RichEmbed()
             .setAuthor(
                 this._client.user.username,
@@ -29,8 +31,10 @@ export class PublicLogger {
             )
             .addField("Reason", options.reason);
         try {
+            // Since dbCase.type will vary, I prefer to assign it all in one place, rather than simply doing `dbCase.type = options.type` further up.
             switch (options.type) {
                 case "ban": {
+                    dbCase.type = "ban";
                     embed
                         .setTitle("Member Banned")
                         .setColor("BLUE")
@@ -41,6 +45,7 @@ export class PublicLogger {
                     break;
                 }
                 case "kick": {
+                    dbCase.type = "kick";
                     embed
                         .setTitle("Member Kicked")
                         .setColor("GREEN")
@@ -51,6 +56,7 @@ export class PublicLogger {
                     break;
                 }
                 case "warn": {
+                    dbCase.type = "warn";
                     embed
                         .setTitle("Member Warned")
                         .setColor("ORANGE")
@@ -61,6 +67,7 @@ export class PublicLogger {
                     break;
                 }
                 case "mute": {
+                    dbCase.type = "mute";
                     embed
                         .setTitle("Member Muted")
                         .setColor("PINK")
@@ -77,6 +84,7 @@ export class PublicLogger {
             }
         } finally {
             // prettier-ignore
+
             await this._loggingChannel.send(embed);
         }
     }
