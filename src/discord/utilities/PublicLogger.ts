@@ -43,6 +43,7 @@ export class PublicLogger {
             )
             .setThumbnail(options.member.user.displayAvatarURL)
             .addField("Reason", options.reason || "None provided.");
+        // Ensure that the embed will have the new properties when sending the message.
         try {
             // tslint:disable-next-line
             // Since dbCase.type will vary, I prefer to assign it all in one place, rather than simply doing `dbCase.type = options.type` further up.
@@ -92,9 +93,7 @@ export class PublicLogger {
                 }
             }
         } finally {
-            // prettier-ignore
             await dbCase.save();
-
             await this._loggingChannel.send(embed);
         }
     }
