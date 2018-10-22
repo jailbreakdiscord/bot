@@ -10,3 +10,9 @@ export async function onMessage(message: DMessage) {
     const dbMessage = await Message.createOrUpdate(message);
     Logger.log(`Added message (${dbMessage.id}) to the database.`);
 }
+
+export async function onMessageUpdate(message: DMessage) {
+    // Guild will already be in the database, no need to resave it.
+    const dbMessage = await Message.createOrUpdate(message);
+    Logger.log(`Added message (${dbMessage.id}) to the database.`);
+}

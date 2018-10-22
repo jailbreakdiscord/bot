@@ -6,6 +6,7 @@ import * as GuildEvent from "./guild";
 export function bindEventHandlersToClient(client: Client) {
     // Message Events
     client.on("message", MessageEvent.onMessage);
+    client.on("messageUpdate", MessageEvent.onMessageUpdate);
 
     // Guild Events
     client.on("guildCreate", GuildEvent.guildCreate);
