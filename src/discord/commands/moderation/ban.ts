@@ -1,12 +1,12 @@
 import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
 import { GuildMember } from "discord.js";
-export const KickCommand: Command = {
+export const BanCommand: Command = {
     opts: {
-        name: "kick",
+        name: "ban",
         access: AccessLevel.MODERATOR,
         category: "Moderation",
         guards: [
-            Guards.Argumented("kick", "Kicks a user", [
+            Guards.Argumented("ban", "Bans a user", [
                 {
                     name: "user",
                     type: "member",
@@ -22,10 +22,11 @@ export const KickCommand: Command = {
         ]
     },
     handler: async (message, next) => {
+        //TODO: Post to mod logs when that is implemented.
         const [_member, reason]: any | GuildMember = message.args;
         const member: GuildMember = _member;
-        if (!member.kickable) return message.fail();
-        await member.send(`You were kicked with reason: ${reason}.`);
-        await member.kick(reason);
+        if (!member.bannable) return message.fail();
+        await member.send(`You were banned with reason: ${reason}.`);
+        await member.ban({reason, days: 7});
     }
 };
