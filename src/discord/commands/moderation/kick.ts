@@ -32,7 +32,9 @@ export const KickCommand: Command = {
             reason,
             moderator: message.author
         });
-        await member.send(`You were kicked with reason: ${reason}.`);
-        await member.kick(reason);
+        await member.send(
+            `You were kicked with reason: ${reason || "none provided"}.`
+        );
+        // await member.kick(reason);
     }
 };

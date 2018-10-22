@@ -35,12 +35,13 @@ export class PublicLogger {
                 this._client.user.displayAvatarURL
             )
             // TODO: this is supposed to be the actual case number.
-            .setFooter(`case #${++oldCase!.case || 0}`)
+            .setFooter(`case #${oldCase ? ++oldCase.case : 0}`)
             .setTimestamp()
             .addField(
                 "Member",
                 `${options.member.user.tag} (${options.member.user.id})`
             )
+            .setThumbnail(options.member.user.displayAvatarURL)
             .addField("Reason", options.reason || "None provided.");
         try {
             // tslint:disable-next-line
