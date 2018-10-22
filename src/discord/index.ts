@@ -26,6 +26,7 @@ export function startBot(): Promise<Application> {
     });
 }
 
+// Getter method for logger.
 export function getPublicLogger() {
     return PublicLogger;
 }

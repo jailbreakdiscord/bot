@@ -19,6 +19,7 @@ export class PublicLogger {
     public async send(
         options: IWarnLoggerOption | ITemporaryLoggerOption | ILoggerOption
     ) {
+        // Get old case to generate a case number.
         const oldCase:
             | PublicLogsCase
             | undefined = await PublicLogsCase.findOne({
@@ -34,7 +35,7 @@ export class PublicLogger {
                 this._client.user.displayAvatarURL
             )
             // TODO: this is supposed to be the actual case number.
-            .setFooter(`case #${++oldCase!.case}`)
+            .setFooter(`case #${++oldCase!.case || 0}`)
             .setTimestamp()
             .addField(
                 "Member",
