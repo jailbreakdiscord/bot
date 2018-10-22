@@ -1,5 +1,4 @@
 import { GuildMember, User } from "discord.js";
-// TODO: move to separate files
 interface ISendOption {
     type: "ban" | "kick" | "warn" | "mute";
     reason: string;

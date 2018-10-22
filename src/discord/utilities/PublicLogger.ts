@@ -14,7 +14,7 @@ export class PublicLogger {
             channel
         )! as TextChannel;
     }
-    // TODO: write this method
+
     public async send(options: IWarnLoggerOption | ITemporaryLoggerOption) {
         const dbCase = new PublicLogsCase();
         dbCase.reason = options.reason;
