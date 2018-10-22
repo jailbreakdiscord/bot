@@ -1,4 +1,4 @@
-import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
+import { Command, AccessLevel, Guards } from "dd-botkit";
 import { GuildMember } from "discord.js";
 import { getPublicLogger } from "../..";
 export const BanCommand: Command = {
@@ -36,5 +36,6 @@ export const BanCommand: Command = {
         });
         await member.send(`You were banned with reason: ${reason}.`);
         await member.ban({ reason, days: 7 });
+        await message.success();
     }
 };

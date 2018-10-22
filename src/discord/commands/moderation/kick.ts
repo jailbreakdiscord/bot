@@ -1,4 +1,4 @@
-import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
+import { Command, AccessLevel, Guards } from "dd-botkit";
 import { GuildMember } from "discord.js";
 import { getPublicLogger } from "../../index";
 export const KickCommand: Command = {
@@ -35,6 +35,7 @@ export const KickCommand: Command = {
         await member.send(
             `You were kicked with reason: ${reason || "none provided"}.`
         );
-        // await member.kick(reason);
+        await member.kick(reason);
+        await message.success();
     }
 };

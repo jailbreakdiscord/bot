@@ -1,4 +1,4 @@
-import { GuildChannel, RichEmbed, Client, TextChannel } from "discord.js";
+import { RichEmbed, Client, TextChannel } from "discord.js";
 import {
     IWarnLoggerOption,
     ITemporaryLoggerOption,
