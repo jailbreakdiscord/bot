@@ -1,5 +1,6 @@
 import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
 import { GuildMember } from "discord.js";
+import { getPublicLogger } from "../..";
 export const BanCommand: Command = {
     opts: {
         name: "ban",
@@ -22,11 +23,18 @@ export const BanCommand: Command = {
         ]
     },
     handler: async (message, next) => {
-        //TODO: Post to mod logs when that is implemented.
+        // TODO: Post to mod logs when that is implemented.
         const [_member, reason]: any | GuildMember = message.args;
         const member: GuildMember = _member;
         if (!member.bannable) return message.fail();
+        await getPublicLogger().send({
+            type: "ban",
+            duration: 0,
+            member,
+            reason,
+            moderator: message.author
+        });
         await member.send(`You were banned with reason: ${reason}.`);
-        await member.ban({reason, days: 7});
+        await member.ban({ reason, days: 7 });
     }
 };

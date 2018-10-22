@@ -1,5 +1,5 @@
 import { GuildMember, User } from "discord.js";
-interface ISendOption {
+export interface ILoggerOption {
     type: "ban" | "kick" | "warn" | "mute";
     reason: string;
     member: GuildMember;
@@ -8,12 +8,12 @@ interface ISendOption {
 /**
  * To be used for ban/kick/mute
  */
-export interface ITemporaryLoggerOption extends ISendOption {
+export interface ITemporaryLoggerOption extends ILoggerOption {
     duration: string;
 }
 /**
  * To be used for warn
  */
-export interface IWarnLoggerOption extends ISendOption {
+export interface IWarnLoggerOption extends ILoggerOption {
     points: number;
 }

@@ -11,7 +11,7 @@ export const app = new Application({
     COMMAND_PREFIX: config.prefix
 });
 
-let PublicLogger;
+let PublicLogger: _PublicLogger;
 
 export function startBot(): Promise<Application> {
     Constants.applyPatches({
@@ -21,7 +21,11 @@ export function startBot(): Promise<Application> {
     });
 
     return app.init().then(() => {
-        PublicLogger = new _PublicLogger(app.client, "public-mod-logs");
+        PublicLogger = new _PublicLogger(app.client, "503823665373118465");
         return app;
     });
+}
+
+export function getPublicLogger() {
+    return PublicLogger;
 }

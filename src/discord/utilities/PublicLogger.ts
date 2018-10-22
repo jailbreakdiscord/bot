@@ -1,7 +1,8 @@
 import { GuildChannel, RichEmbed, Client, TextChannel } from "discord.js";
 import {
     IWarnLoggerOption,
-    ITemporaryLoggerOption
+    ITemporaryLoggerOption,
+    ILoggerOption
 } from "../interfaces/LoggerOptions";
 import { PublicLogsCase } from "../../database/entities/PublicLogsCase";
 
@@ -15,23 +16,33 @@ export class PublicLogger {
         )! as TextChannel;
     }
 
-    public async send(options: IWarnLoggerOption | ITemporaryLoggerOption) {
+    public async send(
+        options: IWarnLoggerOption | ITemporaryLoggerOption | ILoggerOption
+    ) {
+        const oldCase:
+            | PublicLogsCase
+            | undefined = await PublicLogsCase.findOne({
+            order: { case: "DESC" }
+        });
         const dbCase = new PublicLogsCase();
         dbCase.reason = options.reason;
+        dbCase.id = options.member.user.id;
+        dbCase.points = 0;
         const embed = new RichEmbed()
             .setAuthor(
                 this._client.user.username,
                 this._client.user.displayAvatarURL
             )
             // TODO: this is supposed to be the actual case number.
-            .setFooter(dbCase.case)
+            .setFooter(`case #${++oldCase!.case}`)
             .setTimestamp()
             .addField(
                 "Member",
                 `${options.member.user.tag} (${options.member.user.id})`
             )
-            .addField("Reason", options.reason);
+            .addField("Reason", options.reason || "None provided.");
         try {
+            // tslint:disable-next-line
             // Since dbCase.type will vary, I prefer to assign it all in one place, rather than simply doing `dbCase.type = options.type` further up.
             switch (options.type) {
                 case "ban": {
@@ -47,13 +58,7 @@ export class PublicLogger {
                 }
                 case "kick": {
                     dbCase.type = "kick";
-                    embed
-                        .setTitle("Member Kicked")
-                        .setColor("GREEN")
-                        .addField(
-                            "Duration",
-                            (options as ITemporaryLoggerOption).duration
-                        );
+                    embed.setTitle("Member Kicked").setColor("GREEN");
                     break;
                 }
                 case "warn": {
@@ -87,6 +92,7 @@ export class PublicLogger {
         } finally {
             // prettier-ignore
             await dbCase.save();
+
             await this._loggingChannel.send(embed);
         }
     }

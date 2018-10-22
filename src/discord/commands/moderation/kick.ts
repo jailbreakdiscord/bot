@@ -1,5 +1,6 @@
 import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
 import { GuildMember } from "discord.js";
+import { getPublicLogger } from "../../index";
 export const KickCommand: Command = {
     opts: {
         name: "kick",
@@ -25,6 +26,12 @@ export const KickCommand: Command = {
         const [_member, reason]: any | GuildMember = message.args;
         const member: GuildMember = _member;
         if (!member.kickable) return message.fail();
+        await getPublicLogger().send({
+            type: "kick",
+            member,
+            reason,
+            moderator: message.author
+        });
         await member.send(`You were kicked with reason: ${reason}.`);
         await member.kick(reason);
     }

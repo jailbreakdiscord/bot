@@ -25,9 +25,6 @@ export class PublicLogsCase extends DBEntity {
     public type: "ban" | "kick" | "warn" | "mute";
 
     // Will automatically increment on every new case.
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("increment")
     public case: number;
-
-    @CreateDateColumn()
-    private createdAt: string;
 }
