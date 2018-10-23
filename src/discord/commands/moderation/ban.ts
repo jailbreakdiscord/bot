@@ -23,7 +23,6 @@ export const BanCommand: Command = {
         ]
     },
     handler: async (message, next) => {
-        // TODO: Post to mod logs when that is implemented.
         const [_member, reason]: any | GuildMember = message.args;
         const member: GuildMember = _member;
         if (!member.bannable) return message.fail();

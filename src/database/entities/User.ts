@@ -6,7 +6,6 @@ import { Guild } from "./Guild";
 
 @Entity()
 export class User extends DBEntity {
-    
     /**
      * Creates or updates a Discord User object.
      * @param discordUser The discord.js guild object to represent in the database.
@@ -33,9 +32,9 @@ export class User extends DBEntity {
     @Column()
     public discriminator: string;
 
-    @OneToMany(type => Message, message => message.author)
+    @OneToMany((type) => Message, (message) => message.author)
     public messages: Promise<Message[]>;
 
-    @ManyToMany(type => Guild, guild => guild.members)
+    @ManyToMany((type) => Guild, (guild) => guild.users)
     public guilds: Promise<Guild[]>;
 }
