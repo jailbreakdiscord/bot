@@ -15,5 +15,24 @@ export async function onMessage(message: DMessage) {
     if (message.guild) {
         const dbMember = await GuildMember.createOrUpdate(message.member);
         Logger.log(`Added member (${dbMember.id}) to the database.`);
+        onMessageXp(message);
     }
+}
+
+async function onMessageXp(message: DMessage): Promise<void> {
+    // XP is only a thing in guilds.
+    if (!message.guild) return;
+    // We're certain that the member will have been created, since this function is called after the `createOrUpdate` call in `onMessage`.
+    const dbMember: GuildMember | undefined = await GuildMember.findOne({
+        id: message.member.id
+    });
+    if (dbMember !== undefined) {
+        dbMember.xp = generateXP();
+        dbMember.save();
+    }
+}
+
+// TODO: develop this further.
+function generateXP(): number {
+    return Math.floor(Math.random() * 20) + 1;
 }
