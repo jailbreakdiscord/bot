@@ -23,10 +23,13 @@ export class GuildMember extends DBEntity {
         if (!member) {
             member = new GuildMember();
             member.id = guildMember.id;
+            member.guild = guildMember.guild;
+            member.warnpoints = 0;
+            member.xp = 0;
+            member.user = guildMember.user;
         }
 
         /* I'm not sure how to handle relational properties here. */
-
         return member.save();
     }
 
@@ -34,7 +37,7 @@ export class GuildMember extends DBEntity {
     public guild: DGuild;
 
     @OneToOne((type) => User, (user) => user)
-    public user: User;
+    public user: DUser;
 
     @Column()
     public warnpoints: number;
