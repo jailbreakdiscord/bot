@@ -27,8 +27,8 @@ export const AdvDevCommand: Command = {
     },
     handler: async (msg, next) => {
         if (
-            msg.guild.id === "349243932447604736" ||
-            msg.guild.id === "493378389802090498"
+            msg.guild.id !== "349243932447604736" &&
+            msg.guild.id !== "493378389802090498"
         ) {
             return msg.fail();
         }

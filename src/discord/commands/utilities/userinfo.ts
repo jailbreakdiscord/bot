@@ -3,8 +3,8 @@ import { RichEmbed, User, GuildMember } from "discord.js";
 export const KickCommand: Command = {
     opts: {
         name: "userinfo",
-        access: AccessLevel.MODERATOR,
-        category: "Moderation",
+        access: AccessLevel.EVERYONE,
+        category: "Utilities",
         guards: [
             Guards.Argumented(
                 "userinfo",

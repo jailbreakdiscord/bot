@@ -6,29 +6,25 @@ export const NicknameCommand: Command = {
         access: AccessLevel.MODERATOR,
         category: "Moderation",
         guards: [
-            Guards.Argumented(
-                "nickname",
-                "Force changes the nickname of a user",
-                [
-                    {
-                        name: "user",
-                        type: "user",
-                        required: true
-                    },
-                    {
-                        name: "nickname",
-                        type: "string",
-                        required: true
-                    }
-                ]
-            )
+            Guards.Argumented("nickname", "Changes the nickname of a user", [
+                {
+                    name: "user",
+                    type: "user",
+                    required: true
+                },
+                {
+                    name: "nickname",
+                    type: "string",
+                    required: true
+                }
+            ])
         ]
     },
     handler: async (msg, next) => {
         const [user, nickname]: any | string = msg.args;
 
         // FIXME: Types here are completely wrong.
-        const member = msg.guild.members.get((user).id);
+        const member = msg.guild.members.get(user.id);
 
         if (!member) {
             throw new CommandError({

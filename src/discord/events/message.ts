@@ -5,21 +5,21 @@ import { Logger } from "dd-botkit";
 import { GuildMember } from "../../database/entities/GuildMember";
 
 export async function onMessage(message: DMessage) {
-    const dbGuild = await Guild.createOrUpdate(message.guild);
-    Logger.log(`Added guild (${dbGuild.id}) to the database.`);
-
     const dbMessage = await Message.createOrUpdate(message);
     Logger.log(`Added message (${dbMessage.id}) to the database.`);
 
-    // message.member will only be defined if the message is in a guild.
+    // message.member | message.guild will only be defined if the message is in a guild.
     if (message.guild) {
+        const dbGuild = await Guild.createOrUpdate(message.guild);
+        Logger.log(`Added guild (${dbGuild.id}) to the database.`);
+
         const dbMember = await GuildMember.createOrUpdate(message.member);
         Logger.log(`Added member (${dbMember.id}) to the database.`);
-        onMessageXp(message);
+        await onMessageXp(message);
     }
 }
 
-async function onMessageXp(message: DMessage): Promise<void> {
+async function onMessageXp(message: DMessage) {
     // XP is only a thing in guilds.
     if (!message.guild) return;
     // We're certain that the member will have been created, since this function is called after the `createOrUpdate` call in `onMessage`.
@@ -27,8 +27,8 @@ async function onMessageXp(message: DMessage): Promise<void> {
         id: message.member.id
     });
     if (dbMember !== undefined) {
-        dbMember.xp = generateXP();
-        dbMember.save();
+        dbMember.xp += generateXP();
+        return dbMember.save();
     }
 }
 
