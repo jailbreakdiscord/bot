@@ -23,6 +23,7 @@ export class Message extends DBEntity {
             message = new Message();
             message.id = discordMessage.id;
         }
+        message.guildID = discordMessage.guild.id;
         message.authorID = discordMessage.author.id;
         message.content = discordMessage.content;
 
@@ -36,7 +37,7 @@ export class Message extends DBEntity {
     @ManyToOne((type) => Guild, (guild) => guild.messages)
     public guild: Promise<Guild>;
 
-    @RelationId("guild")
+    @Column()
     public guildID: string;
 
     @ManyToOne((type) => User, (user) => user.messages)

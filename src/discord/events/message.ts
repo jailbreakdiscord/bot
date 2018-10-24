@@ -3,7 +3,7 @@ import { Message as DMessage } from "discord.js";
 import { Guild, Message, User } from "../../database/entities";
 import { Logger } from "dd-botkit";
 import { GuildMember } from "../../database/entities/GuildMember";
-
+/* tslint:disable */
 export async function onMessage(message: DMessage) {
     const dbUser = await User.createOrUpdate(message.author);
     Logger.log(`Added message (${dbUser.id}) to the database.`);
@@ -40,11 +40,12 @@ async function onMessageXp(message: DMessage) {
 
 // TODO: develop this further.
 async function generateXP(dbMember: GuildMember): Promise<number> {
-    // tslint:disable-next-line
-    console.log(dbMember);
+    // Fetch messages from author in specific guild.
     const dbMessages = await Message.find({
-        authorID: dbMember.id,
-        guildID: dbMember.guild.id
+        where: {
+            authorID: dbMember.id,
+            guildID: dbMember.guild.id
+        }
     });
     return Math.round(
         (Math.floor(Math.random() * 20) + 1) *
