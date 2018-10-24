@@ -3,7 +3,6 @@ import { Message as DMessage } from "discord.js";
 import { Guild, Message, User } from "../../database/entities";
 import { Logger } from "dd-botkit";
 import { GuildMember } from "../../database/entities/GuildMember";
-import { MetadataArgsStorage } from "typeorm/metadata-args/MetadataArgsStorage";
 
 export async function onMessage(message: DMessage) {
     const dbUser = await User.createOrUpdate(message.author);
@@ -17,7 +16,10 @@ export async function onMessage(message: DMessage) {
         const dbGuild = await Guild.createOrUpdate(message.guild);
         Logger.log(`Added guild (${dbGuild.id}) to the database.`);
 
-        const dbMember = await GuildMember.createOrUpdate(message.member);
+        const dbMember = await GuildMember.createOrUpdate(
+            message.member,
+            dbGuild
+        );
         Logger.log(`Added member (${dbMember.id}) to the database.`);
         await onMessageXp(message);
     }
@@ -38,7 +40,12 @@ async function onMessageXp(message: DMessage) {
 
 // TODO: develop this further.
 async function generateXP(dbMember: GuildMember): Promise<number> {
-    const dbMessages = await Message.find({ authorID: dbMember.id });
+    // tslint:disable-next-line
+    console.log(dbMember);
+    const dbMessages = await Message.find({
+        authorID: dbMember.id,
+        guildID: dbMember.guild.id
+    });
     return Math.round(
         (Math.floor(Math.random() * 20) + 1) *
             Math.sqrt(dbMessages.length / 100)

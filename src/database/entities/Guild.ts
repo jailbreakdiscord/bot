@@ -44,5 +44,5 @@ export class Guild extends DBEntity {
     public users: Promise<User[]>;
 
     @ManyToOne((type) => GuildMember, (member) => member.guild)
-    public members: Promise<GuildMember[]>;
+    public members: GuildMember[];
 }

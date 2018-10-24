@@ -4,7 +4,14 @@ import {
     GuildMember as DGuildMember
 } from "discord.js";
 import { DBEntity } from "dd-botkit";
-import { Entity, Column, OneToMany, ManyToMany, OneToOne } from "typeorm";
+import {
+    Entity,
+    Column,
+    OneToMany,
+    ManyToMany,
+    OneToOne,
+    ManyToOne
+} from "typeorm";
 import { Message } from "./Message";
 import { Guild } from "./Guild";
 import { User } from "./User";
@@ -16,7 +23,8 @@ export class GuildMember extends DBEntity {
      * @param guildMember The discord.js guild object to represent in the database.
      */
     public static async createOrUpdate(
-        guildMember: DGuildMember
+        guildMember: DGuildMember,
+        guild: Guild
     ): Promise<GuildMember> {
         let member = await GuildMember.findOne({ id: guildMember.id });
         const dbUser: User | undefined = await User.findOne({
@@ -25,20 +33,19 @@ export class GuildMember extends DBEntity {
         if (!member) {
             member = new GuildMember();
             member.id = guildMember.id;
-            member.guild = guildMember.guild;
             member.warnpoints = 0;
             member.xp = 0;
+            member.guild = guild;
             if (dbUser) {
                 member.user = dbUser;
             }
         }
 
-        /* I'm not sure how to handle relational properties here. */
         return member.save();
     }
 
-    @OneToOne((type) => Guild, (guild) => guild)
-    public guild: DGuild;
+    @ManyToOne((type) => Guild, (guild) => guild.members, { eager: true })
+    public guild: Guild;
 
     @OneToOne((type) => User, (user) => user)
     public user: User;
