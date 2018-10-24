@@ -1,10 +1,14 @@
 import { Message as DMessage } from "discord.js";
 
-import { Guild, Message } from "../../database/entities";
+import { Guild, Message, User } from "../../database/entities";
 import { Logger } from "dd-botkit";
 import { GuildMember } from "../../database/entities/GuildMember";
+import { MetadataArgsStorage } from "typeorm/metadata-args/MetadataArgsStorage";
 
 export async function onMessage(message: DMessage) {
+    const dbUser = await User.createOrUpdate(message.author);
+    Logger.log(`Added message (${dbUser.id}) to the database.`);
+
     const dbMessage = await Message.createOrUpdate(message);
     Logger.log(`Added message (${dbMessage.id}) to the database.`);
 
@@ -27,12 +31,16 @@ async function onMessageXp(message: DMessage) {
         id: message.member.id
     });
     if (dbMember !== undefined) {
-        dbMember.xp += generateXP();
+        dbMember.xp += await generateXP(dbMember);
         return dbMember.save();
     }
 }
 
 // TODO: develop this further.
-function generateXP(): number {
-    return Math.floor(Math.random() * 20) + 1;
+async function generateXP(dbMember: GuildMember): Promise<number> {
+    const dbMessages = await Message.find({ authorID: dbMember.id });
+    return Math.round(
+        (Math.floor(Math.random() * 20) + 1) *
+            Math.sqrt(dbMessages.length / 100)
+    );
 }

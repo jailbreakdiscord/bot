@@ -1,6 +1,6 @@
 import { User as DUser } from "discord.js";
 import { DBEntity } from "dd-botkit";
-import { Entity, Column, OneToMany, ManyToMany } from "typeorm";
+import { Entity, Column, OneToMany, ManyToMany, ManyToOne } from "typeorm";
 import { Message } from "./Message";
 import { Guild } from "./Guild";
 
@@ -32,8 +32,8 @@ export class User extends DBEntity {
     @Column()
     public discriminator: string;
 
-    @OneToMany((type) => Message, (message) => message.author)
-    public messages: Promise<Message[]>;
+    @ManyToOne((type) => Message, (message) => message.author)
+    public messages: Message[];
 
     @ManyToMany((type) => Guild, (guild) => guild.users)
     public guilds: Promise<Guild[]>;

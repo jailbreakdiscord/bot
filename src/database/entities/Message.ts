@@ -10,19 +10,19 @@ import { User } from "./User";
 */
 @Entity()
 export class Message extends DBEntity {
-    
     /**
      * Creates or updates a Discord Message object.
      * @param discordMessage The discord.js message object to represent in the database.
      */
-    public static async createOrUpdate(discordMessage: DMessage): Promise<Message> {
+    public static async createOrUpdate(
+        discordMessage: DMessage
+    ): Promise<Message> {
         let message = await Message.findOne({ id: discordMessage.id });
 
         if (!message) {
             message = new Message();
             message.id = discordMessage.id;
         }
-
         message.authorID = discordMessage.author.id;
         message.content = discordMessage.content;
 
@@ -33,14 +33,14 @@ export class Message extends DBEntity {
     @Column()
     public content: string;
 
-    @ManyToOne(type => Guild, guild => guild.messages)
+    @ManyToOne((type) => Guild, (guild) => guild.messages)
     public guild: Promise<Guild>;
 
     @RelationId("guild")
     public guildID: string;
 
-    @ManyToOne(type => User, user => user.messages)
-    public author: Promise<User>;
+    @ManyToOne((type) => User, (user) => user.messages)
+    public author: User;
 
     /// The ID of the message author
     @RelationId("author")

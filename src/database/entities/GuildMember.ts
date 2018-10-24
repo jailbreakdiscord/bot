@@ -19,14 +19,18 @@ export class GuildMember extends DBEntity {
         guildMember: DGuildMember
     ): Promise<GuildMember> {
         let member = await GuildMember.findOne({ id: guildMember.id });
-
+        const dbUser: User | undefined = await User.findOne({
+            id: guildMember.id
+        });
         if (!member) {
             member = new GuildMember();
             member.id = guildMember.id;
             member.guild = guildMember.guild;
             member.warnpoints = 0;
             member.xp = 0;
-            member.user = guildMember.user;
+            if (dbUser) {
+                member.user = dbUser;
+            }
         }
 
         /* I'm not sure how to handle relational properties here. */
@@ -37,7 +41,7 @@ export class GuildMember extends DBEntity {
     public guild: DGuild;
 
     @OneToOne((type) => User, (user) => user)
-    public user: DUser;
+    public user: User;
 
     @Column()
     public warnpoints: number;
