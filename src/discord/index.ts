@@ -3,6 +3,7 @@ import Application, { Constants } from "dd-botkit";
 
 import { Configuration } from "../Config";
 import { PublicLogger as _PublicLogger } from "./utilities/PublicLogger";
+import { MuteHandler as _MuteHandler } from "./utilities/MuteHandler";
 const config = Configuration.bot;
 export const app = new Application({
     token: config.token,
@@ -12,6 +13,7 @@ export const app = new Application({
 });
 
 let PublicLogger: _PublicLogger;
+let MuteHandler: _MuteHandler;
 
 export function startBot(): Promise<Application> {
     Constants.applyPatches({
@@ -22,6 +24,11 @@ export function startBot(): Promise<Application> {
 
     return app.init().then(() => {
         PublicLogger = new _PublicLogger(app.client, "503823665373118465");
+        MuteHandler = new _MuteHandler(
+            app.client,
+            "493378389802090498",
+            "504937932210307082"
+        );
         return app;
     });
 }
@@ -29,4 +36,8 @@ export function startBot(): Promise<Application> {
 // Getter method for logger.
 export function getPublicLogger() {
     return PublicLogger;
+}
+
+export function getMuteHandler() {
+    return MuteHandler;
 }

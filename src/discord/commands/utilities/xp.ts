@@ -32,7 +32,11 @@ export const XPCommand: Command = {
             .setTitle("XP")
             .setDescription(`XP for ${_member.user.tag}.`)
             .setThumbnail(_member.user.displayAvatarURL)
-            .addField("Experience Points", dbMember ? dbMember.xp : 0);
+            .addField("Experience Points", dbMember ? dbMember.xp : 0)
+            .addField(
+                "Level",
+                dbMember ? Math.pow(Math.sqrt(dbMember.xp), 5) : 0
+            );
 
         await message.channel.send(embed);
         await message.success();
