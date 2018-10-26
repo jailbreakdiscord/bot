@@ -1,3 +1,3 @@
 # Jailbreak Bot
 
-A moderation and multi purpose bot by the jailbreakdiscord staff team.
+A moderation and multi-purpose Discord bot by the Jailbreak Discord staff team.
