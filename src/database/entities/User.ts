@@ -32,9 +32,9 @@ export class User extends DBEntity {
     @Column()
     public discriminator: string;
 
-    @ManyToOne((type) => Message, (message) => message.author)
-    public messages: Message[];
+    @OneToMany((type) => Message, (message) => message.author, { lazy: true })
+    public messages: Promise<Message[]> | Message;
 
-    @ManyToMany((type) => Guild, (guild) => guild.users)
+    @ManyToMany((type) => Guild, (guild) => guild.users, { lazy: true })
     public guilds: Promise<Guild[]>;
 }
