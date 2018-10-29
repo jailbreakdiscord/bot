@@ -3,6 +3,7 @@ import { Entity, Column, OneToMany, OneToOne, ManyToMany, ManyToOne, JoinColumn 
 import { DBEntity } from "dd-botkit";
 import { Message } from "./Message";
 import { User } from "./User";
+import { GuildMember } from "./GuildMember";
 
 /*
   TODO: 
