@@ -1,5 +1,5 @@
 import { Message as DMessage } from "discord.js";
-import { Entity, Column, ManyToOne, RelationId } from "typeorm";
+import { Entity, Column, ManyToOne, Index } from "typeorm";
 import { DBEntity } from "dd-botkit";
 import { Guild } from "./Guild";
 import { User } from "./User";
@@ -17,13 +17,15 @@ export class Message extends DBEntity {
      */
     public static async createOrUpdate(discordMessage: DMessage): Promise<Message> {
         let message = await Message.findOne({ id: discordMessage.id });
+        const author = await User.createOrUpdate(discordMessage.author);
+        const guild = await Guild.createOrUpdate(discordMessage.guild);
 
         if (!message) {
             message = new Message();
             message.id = discordMessage.id;
         }
-
-        message.authorID = discordMessage.author.id;
+        message.guild = guild;
+        message.author = author
         message.content = discordMessage.content;
 
         return message.save();
@@ -32,17 +34,10 @@ export class Message extends DBEntity {
     /// The content of the message
     @Column()
     public content: string;
-
-    @ManyToOne(type => Guild, guild => guild.messages)
-    public guild: Promise<Guild>;
-
-    @RelationId("guild")
-    public guildID: string;
-
-    @ManyToOne(type => User, user => user.messages)
-    public author: Promise<User>;
-
-    /// The ID of the message author
-    @RelationId("author")
-    public authorID: string;
+    
+    @ManyToOne((type) => Guild, (guild) => guild.messages, { lazy: true })
+    public guild: Promise<Guild> | Guild;
+    
+    @ManyToOne((type) => User, (user) => user.messages, { lazy: true })
+    public author: Promise<User> | User;
 }
