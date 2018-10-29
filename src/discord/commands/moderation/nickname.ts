@@ -25,7 +25,7 @@ export const NickCommand: Command = {
     handler: async (message) => {
         const [member,nickname] : GuildMember | any = message.args
         try {
-            await member.setNickname(nickname ? nickname : message.author.username,'Executed by ' + `${message.author.username}(${message.author.id})`)
+            await member.setNickname(nickname ? nickname : message.author.username,`Executed by ${message.author.username}(${message.author.id})`)
             await message.success();
         }
         catch(err){
