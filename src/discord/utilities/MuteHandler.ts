@@ -5,9 +5,13 @@ import {
     RoleResolvable,
     Message
 } from "discord.js";
+import { schedule } from "node-cron";
 import { GuildMember as DBGuildMember } from "../../database/entities/GuildMember";
 import { Guild as DBGuild } from "../../database/entities/Guild";
 import { getPublicLogger } from "../index";
+
+/* tslint:disable */
+
 export class MuteHandler {
     public guild: Guild;
     public muteRole: RoleResolvable;
@@ -42,6 +46,8 @@ export class MuteHandler {
         const dbGuild = await DBGuild.findOne({
             where: { id: member.guild.id }
         });
+        console.log(dbMember);
+
         if (!dbMember) await DBGuildMember.createOrUpdate(member, dbGuild!);
         await member.addRole(this.muteRole);
         await getPublicLogger().send({
@@ -53,6 +59,21 @@ export class MuteHandler {
         });
         // TODO: fix this garbage
         dbMember!.muteDuration = duration;
-        return DBGuildMember.createOrUpdate(member, dbGuild!);
+        return dbMember!.save();
+    }
+
+    public static async bindCron(guildID: string) {
+        schedule("* * * * *", async () => {
+            const dbMembers = await DBGuildMember.find({
+                where: { id: guildID }
+            });
+            for (const member of dbMembers) {
+                // FIXME: make this not shit
+                // will be 0 if not muted
+                if (member.muteDuration === 0) return;
+                member.muteDuration -= 1;
+                member.save();
+            }
+        });
     }
 }
