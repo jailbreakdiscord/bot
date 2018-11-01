@@ -7,10 +7,12 @@ import { DBEntity } from "dd-botkit";
 import {
     Entity,
     Column,
+    JoinColumn,
     OneToMany,
     ManyToMany,
     OneToOne,
-    ManyToOne
+    ManyToOne,
+    Index
 } from "typeorm";
 import { Message } from "./Message";
 import { Guild } from "./Guild";
@@ -27,9 +29,8 @@ export class GuildMember extends DBEntity {
         guild: Guild
     ): Promise<GuildMember> {
         let member = await GuildMember.findOne({ id: guildMember.id });
-        const dbUser: User | undefined = await User.findOne({
-            id: guildMember.id
-        });
+        const user = await User.createOrUpdate(guildMember.user);
+
         if (!member) {
             member = new GuildMember();
             member.id = guildMember.id;
@@ -37,19 +38,18 @@ export class GuildMember extends DBEntity {
             member.xp = 0;
             member.muteDuration = 0;
             member.guild = guild;
-            if (dbUser) {
-                member.user = dbUser;
-            }
+            member.user = user;
         }
 
         return member.save();
     }
 
-    @ManyToOne((type) => Guild, (guild) => guild.members, { eager: true })
-    public guild: Guild;
+    @ManyToOne((type) => Guild, (guild) => guild.members, { lazy: true })
+    public guild: Promise<Guild> | Guild;
 
-    @OneToOne((type) => User, (user) => user)
-    public user: User;
+    @OneToOne((type) => User, (user) => user, { lazy: true })
+    @JoinColumn()
+    public user: Promise<User> | User;
 
     @Column()
     public warnpoints: number;
