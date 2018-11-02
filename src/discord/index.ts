@@ -2,7 +2,7 @@ import path from "path";
 import Application, { Constants } from "dd-botkit";
 
 import { Configuration } from "../Config";
-import { PublicLogger as _PublicLogger } from "./utilities/PublicLogger";
+import { PublicLogger as _PublicLogger } from "./utilities/PublicLogsHandler";
 import { MuteHandler as _MuteHandler } from "./utilities/MuteHandler";
 const config = Configuration.bot;
 export const app = new Application({
