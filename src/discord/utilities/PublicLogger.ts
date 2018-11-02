@@ -34,7 +34,6 @@ export class PublicLogger {
                 this._client.user.username,
                 this._client.user.displayAvatarURL
             )
-            // TODO: this is supposed to be the actual case number.
             .setFooter(`case #${oldCase ? ++oldCase.case : 0}`)
             .setTimestamp()
             .addField(
@@ -83,7 +82,7 @@ export class PublicLogger {
                         .setColor("PINK")
                         .addField(
                             "Duration",
-                            (options as ITemporaryLoggerOption).duration
+                            `${(options as ITemporaryLoggerOption).duration}m`
                         );
                     break;
                 }

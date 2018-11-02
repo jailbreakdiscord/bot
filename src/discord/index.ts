@@ -29,6 +29,7 @@ export function startBot(): Promise<Application> {
             "493378389802090498",
             "504937932210307082"
         );
+        await MuteHandler.bindCron();
         return app;
     });
 }

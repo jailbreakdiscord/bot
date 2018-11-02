@@ -10,8 +10,6 @@ import { GuildMember as DBGuildMember } from "../../database/entities/GuildMembe
 import { Guild as DBGuild } from "../../database/entities/Guild";
 import { getPublicLogger } from "../index";
 
-/* tslint:disable */
-
 export class MuteHandler {
     public guild: Guild;
     public muteRole: RoleResolvable;
@@ -55,22 +53,37 @@ export class MuteHandler {
             moderator: message.author,
             reason
         });
-        let preCalc = new Date();
-        // longer than a day
-        if (duration > 60 * 24) {
-            const days = Math.floor(duration / 60 / 24);
-            const remainingMinutes = (duration % 60) * days;
 
-            // Add necessary time.
-            preCalc.setDate(preCalc.getDate() + days);
-            preCalc.setMinutes(preCalc.getMinutes() + remainingMinutes);
-        } else {
-            preCalc.setMinutes(preCalc.getMinutes() + duration);
-        }
-        const unmuteAt = `${preCalc.toLocaleDateString()} ${preCalc.getHours()}:${preCalc.getMinutes()}`;
+        // Shorter equivalent of `valueOf`.
+        let unmuteAt = Math.floor(+new Date() / 1000);
 
-        // TODO: fix this garbage
-        dbMember!.unmuteAt = preCalc.toLocaleDateString();
+        // Add minutes to the timestamp.
+        unmuteAt += duration * 60;
+        console.log(unmuteAt);
+
+        dbMember!.unmuteAt = unmuteAt.toString();
         return dbMember!.save();
+    }
+
+    public async bindCron() {
+        // Every minute.
+        schedule("* * * * *", async () => {
+            const timestamp = Math.floor(+new Date() / 1000);
+            const dbMembers = await DBGuildMember.find({
+                where: { guildID: this.guild.id }
+            });
+
+            for (const member of dbMembers) {
+                if (member.unmuteAt === "0") return;
+
+                // Check if member should be unmuted
+                if (timestamp > +member.unmuteAt) {
+                    const dMember = await this.guild.fetchMember(member.id);
+                    await dMember.removeRole(this.muteRole);
+                    member.unmuteAt = "0";
+                    return member.save();
+                }
+            }
+        });
     }
 }
