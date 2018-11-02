@@ -1,10 +1,10 @@
 import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
 import { GuildMember as DGuildMember, RichEmbed } from "discord.js";
 import { getMuteHandler } from "../..";
-export const XPCommand: Command = {
+export const UnmuteCommand: Command = {
     opts: {
         name: "unmute",
-        access: AccessLevel.EVERYONE,
+        access: AccessLevel.MODERATOR,
         category: "Moderation",
         guards: [
             Guards.Argumented("unmute", "Unmute a member.", [

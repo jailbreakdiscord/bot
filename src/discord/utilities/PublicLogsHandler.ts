@@ -26,7 +26,7 @@ export class PublicLogger {
             order: { case: "DESC" }
         });
         const dbCase = new PublicLogsCase();
-        dbCase.reason = options.reason;
+        dbCase.reason = options.reason || "";
         dbCase.id = options.member.user.id;
         dbCase.points = 0;
         const embed = new RichEmbed()

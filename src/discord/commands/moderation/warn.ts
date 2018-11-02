@@ -1,20 +1,20 @@
 import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
 import { GuildMember as DGuildMember, RichEmbed } from "discord.js";
-import { getMuteHandler } from "../..";
-export const MuteCommand: Command = {
+import { getMuteHandler, getWarnHandler } from "../..";
+export const WarnCommand: Command = {
     opts: {
-        name: "mute",
-        access: AccessLevel.EVERYONE,
+        name: "warn",
+        access: AccessLevel.MODERATOR,
         category: "Moderation",
         guards: [
-            Guards.Argumented("mute", "Mute a member.", [
+            Guards.Argumented("warn", "Warn a member.", [
                 {
                     name: "member",
                     type: "member",
                     required: true
                 },
                 {
-                    name: "duration",
+                    name: "warnpoints",
                     type: "number",
                     required: true
                 },
@@ -27,12 +27,12 @@ export const MuteCommand: Command = {
         ]
     },
     handler: async (message, next) => {
-        const [member, duration, reason]:
+        const [member, points, reason]:
             | DGuildMember
             | number
             | any = message.args;
         const client = message.client;
-        await getMuteHandler().mute(message, member, duration, reason);
+        await getWarnHandler().warn(message, member, points, reason);
         await message.success();
     }
 };
