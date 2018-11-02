@@ -49,6 +49,9 @@ export class WarnHandler {
                 "Warn points exceeded."
             );
             dbMember.warnpoints = 0;
+        } else {
+            // prettier-ignore
+            member.send(`You have been warned for ${points} warnpoints with the following reason: ${reason ? reason : "none specified"}.`);
         }
         return dbMember.save();
     }
