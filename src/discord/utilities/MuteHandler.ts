@@ -65,6 +65,10 @@ export class MuteHandler {
         return dbMember!.save();
     }
 
+    public async unmute(member: GuildMember) {
+        return member.removeRole(this.muteRole);
+    }
+
     public async bindCron() {
         // Every minute.
         schedule("* * * * *", async () => {

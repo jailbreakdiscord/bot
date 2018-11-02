@@ -7,7 +7,7 @@ export const XPCommand: Command = {
         access: AccessLevel.EVERYONE,
         category: "Moderation",
         guards: [
-            Guards.Argumented("xp", "Mute a member.", [
+            Guards.Argumented("mute", "Mute a member.", [
                 {
                     name: "member",
                     type: "member",
