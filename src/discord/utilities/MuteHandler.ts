@@ -54,14 +54,14 @@ export class MuteHandler {
             reason
         });
 
-        // Shorter equivalent of `valueOf`.
+        // Shorter equivalent of `valueOf` (return a Unix timestamp).
         let unmuteAt = Math.floor(+new Date() / 1000);
 
         // Add minutes to the timestamp.
         unmuteAt += duration * 60;
         console.log(unmuteAt);
 
-        dbMember!.unmuteAt = unmuteAt.toString();
+        dbMember!.unmuteAt = unmuteAt;
         return dbMember!.save();
     }
 
@@ -78,13 +78,13 @@ export class MuteHandler {
             });
 
             for (const member of dbMembers) {
-                if (member.unmuteAt === "0") return;
+                if (member.unmuteAt === 0) return;
 
                 // Check if member should be unmuted
                 if (timestamp > +member.unmuteAt) {
                     const dMember = await this.guild.fetchMember(member.id);
                     await dMember.removeRole(this.muteRole);
-                    member.unmuteAt = "0";
+                    member.unmuteAt = 0;
                     return member.save();
                 }
             }
