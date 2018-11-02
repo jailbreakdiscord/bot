@@ -24,7 +24,6 @@ export function startBot(): Promise<Application> {
 
     return app.init().then(async () => {
         PublicLogger = new _PublicLogger(app.client, "503823665373118465");
-        await _MuteHandler.bindCron("493378389802090498");
         MuteHandler = new _MuteHandler(
             app.client,
             "493378389802090498",

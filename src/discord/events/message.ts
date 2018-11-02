@@ -42,7 +42,7 @@ async function generateXP(dbMember: GuildMember): Promise<number> {
     // Fetch messages from author in specific guild.
     const dbMessages = await Message.find({
         where: {
-            author: await dbMember,
+            author: dbMember,
             guild: await dbMember.guild
         }
     });

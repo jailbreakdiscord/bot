@@ -36,7 +36,7 @@ export class GuildMember extends DBEntity {
             member.id = guildMember.id;
             member.warnpoints = 0;
             member.xp = 0;
-            member.muteDuration = 0;
+            member.unmuteAt = "";
             member.guild = guild;
             member.user = user;
         }
@@ -58,5 +58,5 @@ export class GuildMember extends DBEntity {
     public xp: number;
 
     @Column()
-    public muteDuration: number;
+    public unmuteAt: string;
 }

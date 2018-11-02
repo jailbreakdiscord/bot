@@ -46,8 +46,6 @@ export class MuteHandler {
         const dbGuild = await DBGuild.findOne({
             where: { id: member.guild.id }
         });
-        console.log(dbMember);
-
         if (!dbMember) await DBGuildMember.createOrUpdate(member, dbGuild!);
         await member.addRole(this.muteRole);
         await getPublicLogger().send({
@@ -57,23 +55,22 @@ export class MuteHandler {
             moderator: message.author,
             reason
         });
-        // TODO: fix this garbage
-        dbMember!.muteDuration = duration;
-        return dbMember!.save();
-    }
+        let preCalc = new Date();
+        // longer than a day
+        if (duration > 60 * 24) {
+            const days = Math.floor(duration / 60 / 24);
+            const remainingMinutes = (duration % 60) * days;
 
-    public static async bindCron(guildID: string) {
-        schedule("* * * * *", async () => {
-            const dbMembers = await DBGuildMember.find({
-                where: { id: guildID }
-            });
-            for (const member of dbMembers) {
-                // FIXME: make this not shit
-                // will be 0 if not muted
-                if (member.muteDuration === 0) return;
-                member.muteDuration -= 1;
-                member.save();
-            }
-        });
+            // Add necessary time.
+            preCalc.setDate(preCalc.getDate() + days);
+            preCalc.setMinutes(preCalc.getMinutes() + remainingMinutes);
+        } else {
+            preCalc.setMinutes(preCalc.getMinutes() + duration);
+        }
+        const unmuteAt = `${preCalc.toLocaleDateString()} ${preCalc.getHours()}:${preCalc.getMinutes()}`;
+
+        // TODO: fix this garbage
+        dbMember!.unmuteAt = preCalc.toLocaleDateString();
+        return dbMember!.save();
     }
 }
