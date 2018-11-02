@@ -1,12 +1,6 @@
-import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
-import {
-    GuildMember as DGuildMember,
-    RichEmbed,
-    TextChannel,
-    Role
-} from "discord.js";
-import { getMuteHandler, getWarnHandler } from "../..";
-export const WarnCommand: Command = {
+import { Command, AccessLevel, Guards } from "dd-botkit";
+import { TextChannel, Role } from "discord.js";
+export const AnnounceCommand: Command = {
     opts: {
         name: "announce",
         access: AccessLevel.MODERATOR,

@@ -1,6 +1,6 @@
 import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
 import { RichEmbed, User, GuildMember } from "discord.js";
-export const KickCommand: Command = {
+export const UserinfoCommand: Command = {
     opts: {
         name: "userinfo",
         access: AccessLevel.EVERYONE,
