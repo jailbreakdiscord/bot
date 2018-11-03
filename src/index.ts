@@ -4,6 +4,7 @@ import { connect } from "./database";
 import { bindEventHandlersToClient } from "./discord/events";
 import { Logger } from "dd-botkit";
 
+// tslint:disable-next-line
 connect()
     .then(() => startBot())
     .then((app) => {

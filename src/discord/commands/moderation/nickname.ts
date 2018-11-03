@@ -25,8 +25,9 @@ export const NicknameCommand: Command = {
         ]
     },
     handler: async (msg, next) => {
-        const [user, nickname] = msg.args;
-        const member = msg.guild.members.get((user as User).id);
+        const [user, nickname] = msg.args;        
+        // FIXME: Types here are completely wrong.
+        const member = msg.guild.members.get((user as any).id);
 
 
         if (!member) {
