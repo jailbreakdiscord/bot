@@ -1,6 +1,5 @@
 import { Command, AccessLevel, Guards } from "dd-botkit";
-import { GuildMember } from "discord.js";
-import { getPublicLogger, getBadWordHandler } from "../..";
+import { getBadWordHandler } from "../..";
 export const BanCommand: Command = {
     opts: {
         name: "badword",
