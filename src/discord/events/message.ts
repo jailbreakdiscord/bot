@@ -11,7 +11,9 @@ export async function onMessage(message: DMessage) {
     Logger.log(`Added message (${dbMessage.id}) to the database.`);
 
     // message.member | message.guild will only be defined if the message is in a guild.
-    if (message.guild) {
+    if (message.channel.type === "dm") {
+        console.log("ree");
+
         const dbGuild = await Guild.createOrUpdate(message.guild);
         Logger.log(`Added guild (${dbGuild.id}) to the database.`);
 
@@ -33,6 +35,7 @@ async function onMessageBadWord(message: DMessage) {
                 .toLowerCase()
                 .replace(" ", "")
                 .replace(".", "")
+                .includes(badword)
         ) {
             await message.delete();
             // Break, as message will already be deleted.

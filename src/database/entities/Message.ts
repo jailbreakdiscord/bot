@@ -19,6 +19,8 @@ export class Message extends DBEntity {
     ): Promise<Message> {
         let message = await Message.findOne({ id: discordMessage.id });
         const author = await User.createOrUpdate(discordMessage.author);
+
+        // TODO: make this work when the message comes from a dm.
         const guild = await Guild.createOrUpdate(discordMessage.guild);
 
         if (!message) {
@@ -26,7 +28,7 @@ export class Message extends DBEntity {
             message.id = discordMessage.id;
         }
         message.guild = guild;
-        message.author = author
+        message.author = author;
         message.content = discordMessage.content;
 
         return message.save();
@@ -35,10 +37,10 @@ export class Message extends DBEntity {
     /// The content of the message
     @Column()
     public content: string;
-    
+
     @ManyToOne((type) => Guild, (guild) => guild.messages, { lazy: true })
     public guild: Promise<Guild> | Guild;
-    
+
     @ManyToOne((type) => User, (user) => user.messages, { lazy: true })
     public author: Promise<User> | User;
 }

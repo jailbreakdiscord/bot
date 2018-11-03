@@ -24,4 +24,11 @@ export class BadWordHandler {
         dbGuild!.badWords.splice(dbGuild!.badWords.indexOf(badWord), 1);
         return dbGuild!.save();
     }
+
+    public async list(guild: Guild) {
+        const dbGuild = await DBGuild.findOne({
+            where: { id: guild.id }
+        });
+        return dbGuild!.badWords;
+    }
 }

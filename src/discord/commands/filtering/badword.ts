@@ -1,4 +1,5 @@
-import { Command, AccessLevel, Guards } from "dd-botkit";
+import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
+import { RichEmbed } from "discord.js";
 import { getBadWordHandler } from "../..";
 export const BanCommand: Command = {
     opts: {
@@ -24,11 +25,29 @@ export const BanCommand: Command = {
     },
     handler: async (message, next) => {
         const [action, word]: string | any = message.args;
-        if (action !== "add" && action !== "remove") return message.fail();
+        if (action !== "add" && action !== "remove" && action !== "list") {
+            return message.fail();
+        }
         if (action === "add") {
             await getBadWordHandler().addWord(word, message.guild);
-        } else {
+        } else if (action === "remove") {
             await getBadWordHandler().removeWord(word, message.guild);
+        } else {
+            // TODO: send this to discord
+            const words = await getBadWordHandler().list(message.guild);
+            const embed = new RichEmbed()
+                .setAuthor(
+                    message.client.user.username,
+                    message.client.user.displayAvatarURL
+                )
+                .setFooter(Constants.BOT_AUTHOR)
+                .setTimestamp()
+                .setColor("RANDOM")
+                .setTitle("Bad words")
+                .setDescription("All bad words on this server.")
+                // u200b is a ZWS
+                .addField("\u200b", words.map((x) => `‣ ${x}`));
+            await message.channel.send(embed);
         }
         await message.success();
     }
