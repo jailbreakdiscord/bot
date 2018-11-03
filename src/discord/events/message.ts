@@ -31,7 +31,7 @@ async function onMessageBadWord(message: DMessage) {
         if (
             message.content
                 .toLowerCase()
-                .replace(/\s/g, "")
+                .replace(" ", "")
                 .replace(".", "")
         ) {
             await message.delete();
