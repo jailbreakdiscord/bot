@@ -28,7 +28,7 @@ export const UnshortenCommand: Command = {
               message: "Please specify a link."
           });
         }
-        var url = await uu.expand(link)
+        const url = await uu.expand(link)
         const embed = new RichEmbed();
         embed.setDescription(`${url}`)
         await msg.reply(embed);
