@@ -21,6 +21,22 @@ export async function onMessage(message: DMessage) {
         );
         Logger.log(`Added member (${dbMember.id}) to the database.`);
         await onMessageXp(message);
+        await onMessageBadWord(message);
+    }
+}
+
+async function onMessageBadWord(message: DMessage) {
+    const dbGuild = await Guild.findOne({ where: { id: message.guild.id } });
+    for (const badword of dbGuild!.badWords) {
+        if (
+            message.content
+                .toLowerCase()
+                .replace(" ", "")
+                .replace(".", "")
+        ) {
+            await message.delete();
+            break;
+        }
     }
 }
 

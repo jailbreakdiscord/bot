@@ -5,6 +5,7 @@ import { Configuration } from "../Config";
 import { PublicLogger as _PublicLogger } from "./utilities/PublicLogsHandler";
 import { MuteHandler as _MuteHandler } from "./utilities/MuteHandler";
 import { WarnHandler as _WarnHandler } from "./utilities/WarnHandler";
+import { BadWordHandler as _BadWordHandler } from "./utilities/BadWordHandler";
 const config = Configuration.bot;
 export const app = new Application({
     token: config.token,
@@ -16,6 +17,7 @@ export const app = new Application({
 let PublicLogger: _PublicLogger;
 let MuteHandler: _MuteHandler;
 let WarnHandler: _WarnHandler;
+let BadWordHandler: _BadWordHandler;
 
 export function startBot(): Promise<Application> {
     Constants.applyPatches({
@@ -26,6 +28,7 @@ export function startBot(): Promise<Application> {
 
     return app.init().then(async () => {
         PublicLogger = new _PublicLogger(app.client, "503823665373118465");
+        BadWordHandler = new _BadWordHandler(app.client);
         WarnHandler = new _WarnHandler(app.client, "493378389802090498");
         MuteHandler = new _MuteHandler(
             app.client,
@@ -50,4 +53,9 @@ export function getMuteHandler() {
 // Getter method for warn handler.
 export function getWarnHandler() {
     return WarnHandler;
+}
+
+// Getter method for bad word handler.
+export function getBadWordHandler() {
+    return BadWordHandler;
 }

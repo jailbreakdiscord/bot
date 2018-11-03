@@ -1,5 +1,13 @@
 import { Guild as DGuild } from "discord.js";
-import { Entity, Column, OneToMany, OneToOne, ManyToMany, ManyToOne, JoinColumn } from "typeorm";
+import {
+    Entity,
+    Column,
+    OneToMany,
+    OneToOne,
+    ManyToMany,
+    ManyToOne,
+    JoinColumn
+} from "typeorm";
 import { DBEntity } from "dd-botkit";
 import { Message } from "./Message";
 import { User } from "./User";
@@ -22,6 +30,7 @@ export class Guild extends DBEntity {
         if (!guild) {
             guild = new Guild();
             guild.id = discordGuild.id;
+            guild.badWords = [];
         }
 
         guild.name = discordGuild.name;
@@ -44,4 +53,7 @@ export class Guild extends DBEntity {
 
     @OneToMany((type) => GuildMember, (member) => member.guild, { lazy: true })
     public members: Promise<GuildMember[]> | GuildMember[];
+
+    @Column("simple-array")
+    public badWords: string[];
 }
