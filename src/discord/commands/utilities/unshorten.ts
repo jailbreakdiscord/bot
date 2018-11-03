@@ -20,8 +20,8 @@ export const UnshortenCommand: Command = {
             )
         ]
     },
-    handler: async (message, next) => {
-        const [link] = message.args;
+    handler: async (msg, next) => {
+        const [link] = msg.args;
 
         if(!link) {
           throw new CommandError({
@@ -31,6 +31,6 @@ export const UnshortenCommand: Command = {
         var url = await uu.expand(link)
         const embed = new RichEmbed();
         embed.setDescription(`${url}`)
-        await message.channel.send(embed);
+        await msg.reply(embed);
     }
 };
