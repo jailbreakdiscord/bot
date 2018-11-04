@@ -12,7 +12,7 @@ export class InviteHandler {
         const dbGuild = await DBGuild.findOne({
             where: { id: guild.id }
         });
-        dbGuild!.invites.push(invite.toLowerCase());
+        dbGuild!.allowedInvites.push(invite.toLowerCase());
         return dbGuild!.save();
     }
 
@@ -20,7 +20,11 @@ export class InviteHandler {
         const dbGuild = await DBGuild.findOne({
             where: { id: guild.id }
         });
-        dbGuild!.invites.splice(dbGuild!.badWords.indexOf(invite), 1);
+        // remove invite
+        dbGuild!.allowedInvites.splice(
+            dbGuild!.allowedInvites.indexOf(invite),
+            1
+        );
         return dbGuild!.save();
     }
 
@@ -28,6 +32,6 @@ export class InviteHandler {
         const dbGuild = await DBGuild.findOne({
             where: { id: guild.id }
         });
-        return dbGuild!.invites;
+        return dbGuild!.allowedInvites;
     }
 }

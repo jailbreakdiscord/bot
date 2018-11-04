@@ -39,9 +39,7 @@ async function onMessageBadWord(message: DMessage) {
                 .replace(".", "")
                 .includes(badword)
         ) {
-            await message.delete();
-            // Break, as message will already be deleted.
-            break;
+            return message.delete();
         }
     }
 }
@@ -49,15 +47,11 @@ async function onMessageBadWord(message: DMessage) {
 async function onMessageInvite(message: DMessage) {
     const dbGuild = await Guild.findOne({ where: { id: message.guild.id } });
     const invitesInMessage = message.content.match(
-        /(discord\.gg|discordapp\.com\/invite).+/g
+        /(?<=(discord\.gg\/|discordapp\.com\/invite\/|discord.me\/)).+/g
     );
     if (!invitesInMessage) return;
     for (const invite of invitesInMessage) {
-        for (const dbInvite of dbGuild!.invites) {
-            if (!invite.includes(dbInvite)) {
-                return message.delete();
-            }
-        }
+        if (!dbGuild!.allowedInvites.includes(invite)) return message.delete();
     }
 }
 
