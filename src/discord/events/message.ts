@@ -1,9 +1,8 @@
 import { Message as DMessage } from "discord.js";
-
 import { Guild, Message, User } from "../../database/entities";
 import { Logger } from "dd-botkit";
 import { GuildMember } from "../../database/entities/GuildMember";
-import { InviteHandler } from "../utilities/InviteHandler";
+
 export async function onMessage(message: DMessage) {
     const dbUser = await User.createOrUpdate(message.author);
     Logger.log(`Added message (${dbUser.id}) to the database.`);

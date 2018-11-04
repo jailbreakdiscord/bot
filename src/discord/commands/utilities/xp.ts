@@ -1,7 +1,6 @@
 import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
 import { GuildMember as DGuildMember, RichEmbed } from "discord.js";
 import { GuildMember } from "../../../database/entities/GuildMember";
-import { getPublicLogger } from "../..";
 export const XPCommand: Command = {
     opts: {
         name: "xp",

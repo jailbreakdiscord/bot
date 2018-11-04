@@ -1,7 +1,5 @@
 import { Guild, Client, GuildMember, Message } from "discord.js";
-import { GuildMember as DBGuildMember } from "../../database/entities/GuildMember";
 import { Guild as DBGuild } from "../../database/entities/Guild";
-import { getPublicLogger } from "../index";
 
 export class BadWordHandler {
     private _client: Client;

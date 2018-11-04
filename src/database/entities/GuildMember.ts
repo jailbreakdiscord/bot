@@ -4,17 +4,7 @@ import {
     GuildMember as DGuildMember
 } from "discord.js";
 import { DBEntity } from "dd-botkit";
-import {
-    Entity,
-    Column,
-    JoinColumn,
-    OneToMany,
-    ManyToMany,
-    OneToOne,
-    ManyToOne,
-    Index
-} from "typeorm";
-import { Message } from "./Message";
+import { Entity, Column, JoinColumn, OneToOne, ManyToOne } from "typeorm";
 import { Guild } from "./Guild";
 import { User } from "./User";
 

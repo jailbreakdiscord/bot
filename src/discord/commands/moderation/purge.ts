@@ -1,4 +1,4 @@
-import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
+import { Command, AccessLevel, CommandError, Guards } from "dd-botkit";
 export const PurgeCommand: Command = {
     opts: {
         name: "purge",

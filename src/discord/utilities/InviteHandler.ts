@@ -1,5 +1,4 @@
-import { Guild, Client, GuildMember, Message } from "discord.js";
-import { GuildMember as DBGuildMember } from "../../database/entities/GuildMember";
+import { Guild, Client } from "discord.js";
 import { Guild as DBGuild } from "../../database/entities/Guild";
 
 export class InviteHandler {

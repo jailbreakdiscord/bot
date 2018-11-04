@@ -1,6 +1,6 @@
 import { User as DUser } from "discord.js";
 import { DBEntity } from "dd-botkit";
-import { Entity, Column, OneToMany, ManyToMany, ManyToOne } from "typeorm";
+import { Entity, Column, OneToMany, ManyToMany } from "typeorm";
 import { Message } from "./Message";
 import { Guild } from "./Guild";
 

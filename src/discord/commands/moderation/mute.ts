@@ -1,5 +1,5 @@
-import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
-import { GuildMember as DGuildMember, RichEmbed } from "discord.js";
+import { Command, AccessLevel, Guards } from "dd-botkit";
+import { GuildMember as DGuildMember } from "discord.js";
 import { getMuteHandler } from "../..";
 export const MuteCommand: Command = {
     opts: {

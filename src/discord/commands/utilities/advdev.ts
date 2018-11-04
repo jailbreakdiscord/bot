@@ -1,4 +1,4 @@
-import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
+import { Command, AccessLevel, Guards } from "dd-botkit";
 import { User } from "discord.js";
 export const AdvDevCommand: Command = {
     opts: {

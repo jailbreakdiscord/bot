@@ -5,7 +5,6 @@ import {
     OneToMany,
     OneToOne,
     ManyToMany,
-    ManyToOne,
     JoinColumn
 } from "typeorm";
 import { DBEntity } from "dd-botkit";

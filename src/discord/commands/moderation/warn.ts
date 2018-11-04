@@ -1,6 +1,6 @@
-import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
-import { GuildMember as DGuildMember, RichEmbed } from "discord.js";
-import { getMuteHandler, getWarnHandler } from "../..";
+import { Command, AccessLevel, Guards } from "dd-botkit";
+import { GuildMember as DGuildMember } from "discord.js";
+import { getWarnHandler } from "../..";
 export const WarnCommand: Command = {
     opts: {
         name: "warn",

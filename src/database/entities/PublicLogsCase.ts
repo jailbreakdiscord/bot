@@ -1,17 +1,6 @@
 import { User as DUser, GuildMember } from "discord.js";
 import { DBEntity } from "dd-botkit";
-import {
-    Entity,
-    Column,
-    OneToMany,
-    ManyToMany,
-    PrimaryGeneratedColumn,
-    CreateDateColumn
-} from "typeorm";
-import { Message } from "./Message";
-import { Guild } from "./Guild";
-import { LoggerOptions } from "typeorm/logger/LoggerOptions";
-import { User } from "./User";
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class PublicLogsCase extends DBEntity {
