@@ -46,6 +46,7 @@ async function onMessageBadWord(message: DMessage) {
 
 async function onMessageInvite(message: DMessage) {
     const dbGuild = await Guild.findOne({ where: { id: message.guild.id } });
+    // This only matches the invite code.
     const invitesInMessage = message.content.match(
         /(?<=(discord\.gg\/|discordapp\.com\/invite\/|discord.me\/)).+/g
     );

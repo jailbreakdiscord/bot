@@ -1,39 +1,38 @@
 import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
 import { RichEmbed } from "discord.js";
-import { getBadWordHandler } from "../..";
-export const BanCommand: Command = {
+import { getInviteHandler } from "../..";
+export const InviteCommand: Command = {
     opts: {
-        name: "badword",
-        aliases: ["bw"],
-        access: AccessLevel.MODERATOR,
+        name: "invite",
+        access: AccessLevel.ADMIN,
         category: "Filtering",
         guards: [
-            Guards.Argumented("badword", "Add or remove a bad word.", [
+            Guards.Argumented("invite", "Add or remove an allowed invite.", [
                 {
                     name: "action",
                     type: "string",
                     required: true
                 },
                 {
-                    name: "word",
+                    name: "invite",
                     type: "string",
-                    required: false,
+                    required: true,
                     unlimited: true
                 }
             ])
         ]
     },
     handler: async (message, next) => {
-        const [action, word]: string | any = message.args;
+        const [action, invite]: string | any = message.args;
         if (action !== "add" && action !== "remove" && action !== "list") {
             return message.fail();
         }
         if (action === "add") {
-            await getBadWordHandler().addWord(word, message.guild);
+            await getInviteHandler().addInvite(invite, message.guild);
         } else if (action === "remove") {
-            await getBadWordHandler().removeWord(word, message.guild);
+            await getInviteHandler().removeInvite(invite, message.guild);
         } else {
-            const words = await getBadWordHandler().getWords(message.guild);
+            const words = await getInviteHandler().getInvites(message.guild);
             const embed = new RichEmbed()
                 .setAuthor(
                     message.client.user.username,
@@ -42,8 +41,8 @@ export const BanCommand: Command = {
                 .setFooter(Constants.BOT_AUTHOR)
                 .setTimestamp()
                 .setColor("RANDOM")
-                .setTitle("Bad words")
-                .setDescription("All bad words on this server.")
+                .setTitle("Allowed invites")
+                .setDescription("All allowed invites on this server.")
                 // u200b is a ZWS
                 .addField("\u200b", words.map((x) => `‣ ${x}`));
             await message.channel.send(embed);
