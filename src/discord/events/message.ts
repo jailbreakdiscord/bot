@@ -12,7 +12,7 @@ export async function onMessage(message: DMessage) {
     Logger.log(`Added message (${dbMessage.id}) to the database.`);
 
     // message.member | message.guild will only be defined if the message is in a guild.
-    if (message.channel.type === "dm") {
+    if (message.channel.type !== "dm") {
         console.log("ree");
 
         const dbGuild = await Guild.createOrUpdate(message.guild);
@@ -46,12 +46,18 @@ async function onMessageBadWord(message: DMessage) {
 
 async function onMessageInvite(message: DMessage) {
     const dbGuild = await Guild.findOne({ where: { id: message.guild.id } });
-    // This only matches the invite code.
-    const invitesInMessage = message.content.match(
-        /(?<=(discord\.gg\/|discordapp\.com\/invite\/|discord.me\/)).+/g
-    );
+    const invitesInMessage: string[] = [];
+    for (const word of message.content.split(" ")) {
+        const matches = word.match(
+            /(?<=(discord\.gg\/|discordapp\.com\/invite\/|discord.me\/)).+/g
+        );
+        if (!matches) continue;
+        invitesInMessage.push(matches[0]);
+    }
+
     if (!invitesInMessage) return;
     for (const invite of invitesInMessage) {
+        // Delete message if invite is not allowed.
         if (!dbGuild!.allowedInvites.includes(invite)) return message.delete();
     }
 }

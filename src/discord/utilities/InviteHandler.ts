@@ -20,7 +20,7 @@ export class InviteHandler {
         const dbGuild = await DBGuild.findOne({
             where: { id: guild.id }
         });
-        // remove invite
+        // Remove invite from array.
         dbGuild!.allowedInvites.splice(
             dbGuild!.allowedInvites.indexOf(invite),
             1

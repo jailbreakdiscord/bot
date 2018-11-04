@@ -31,6 +31,7 @@ export class Guild extends DBEntity {
             guild = new Guild();
             guild.id = discordGuild.id;
             guild.badWords = [];
+            guild.allowedInvites = [];
         }
 
         guild.name = discordGuild.name;
