@@ -3,6 +3,7 @@ import { Message as DMessage } from "discord.js";
 import { Guild, Message, User } from "../../database/entities";
 import { Logger } from "dd-botkit";
 import { GuildMember } from "../../database/entities/GuildMember";
+import { InviteHandler } from "../utilities/InviteHandler";
 export async function onMessage(message: DMessage) {
     const dbUser = await User.createOrUpdate(message.author);
     Logger.log(`Added message (${dbUser.id}) to the database.`);
@@ -24,6 +25,7 @@ export async function onMessage(message: DMessage) {
         Logger.log(`Added member (${dbMember.id}) to the database.`);
         await onMessageXp(message);
         await onMessageBadWord(message);
+        await onMessageInvite(message);
     }
 }
 
@@ -40,6 +42,21 @@ async function onMessageBadWord(message: DMessage) {
             await message.delete();
             // Break, as message will already be deleted.
             break;
+        }
+    }
+}
+
+async function onMessageInvite(message: DMessage) {
+    const dbGuild = await Guild.findOne({ where: { id: message.guild.id } });
+    const invitesInMessage = message.content.match(
+        /(discord\.gg|discordapp\.com\/invite).+/g
+    );
+    if (!invitesInMessage) return;
+    for (const invite of invitesInMessage) {
+        for (const dbInvite of dbGuild!.invites) {
+            if (!invite.includes(dbInvite)) {
+                return message.delete();
+            }
         }
     }
 }

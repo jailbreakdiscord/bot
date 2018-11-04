@@ -1,34 +1,33 @@
 import { Guild, Client, GuildMember, Message } from "discord.js";
 import { GuildMember as DBGuildMember } from "../../database/entities/GuildMember";
 import { Guild as DBGuild } from "../../database/entities/Guild";
-import { getPublicLogger } from "../index";
 
-export class BadWordHandler {
+export class InviteHandler {
     private _client: Client;
     public constructor(client: Client) {
         this._client = client;
     }
 
-    public async addWord(badWord: string, guild: Guild) {
+    public async addInvite(invite: string, guild: Guild) {
         const dbGuild = await DBGuild.findOne({
             where: { id: guild.id }
         });
-        dbGuild!.badWords.push(badWord.toLowerCase());
+        dbGuild!.invites.push(invite.toLowerCase());
         return dbGuild!.save();
     }
 
-    public async removeWord(badWord: string, guild: Guild) {
+    public async removeInvite(invite: string, guild: Guild) {
         const dbGuild = await DBGuild.findOne({
             where: { id: guild.id }
         });
-        dbGuild!.badWords.splice(dbGuild!.badWords.indexOf(badWord), 1);
+        dbGuild!.invites.splice(dbGuild!.badWords.indexOf(invite), 1);
         return dbGuild!.save();
     }
 
-    public async getWords(guild: Guild) {
+    public async getInvites(guild: Guild) {
         const dbGuild = await DBGuild.findOne({
             where: { id: guild.id }
         });
-        return dbGuild!.badWords;
+        return dbGuild!.invites;
     }
 }

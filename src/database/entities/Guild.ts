@@ -56,4 +56,7 @@ export class Guild extends DBEntity {
 
     @Column("simple-array")
     public badWords: string[];
+
+    @Column("simple-array")
+    public invites: string[];
 }

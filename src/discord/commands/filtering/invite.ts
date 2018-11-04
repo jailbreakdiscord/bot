@@ -1,6 +1,6 @@
 import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
 import { RichEmbed } from "discord.js";
-import { getBadWordHandler, getInviteHandler } from "../..";
+import { getBadWordHandler } from "../..";
 export const BanCommand: Command = {
     opts: {
         name: "badword",
@@ -24,16 +24,16 @@ export const BanCommand: Command = {
         ]
     },
     handler: async (message, next) => {
-        const [action, invite]: string | any = message.args;
+        const [action, word]: string | any = message.args;
         if (action !== "add" && action !== "remove" && action !== "list") {
             return message.fail();
         }
         if (action === "add") {
-            await getInviteHandler().addInvite(invite, message.guild);
+            await getBadWordHandler().addWord(word, message.guild);
         } else if (action === "remove") {
-            await getInviteHandler().removeInvite(invite, message.guild);
+            await getBadWordHandler().removeWord(word, message.guild);
         } else {
-            const invites = await getInviteHandler().getInvites(message.guild);
+            const words = await getBadWordHandler().getWords(message.guild);
             const embed = new RichEmbed()
                 .setAuthor(
                     message.client.user.username,
@@ -42,10 +42,10 @@ export const BanCommand: Command = {
                 .setFooter(Constants.BOT_AUTHOR)
                 .setTimestamp()
                 .setColor("RANDOM")
-                .setTitle("Allowed invites")
-                .setDescription("All allowed invites on this server.")
+                .setTitle("Bad words")
+                .setDescription("All bad words on this server.")
                 // u200b is a ZWS
-                .addField("\u200b", invites.map((x) => `‣ ${x}`));
+                .addField("\u200b", words.map((x) => `‣ ${x}`));
             await message.channel.send(embed);
         }
         await message.success();
