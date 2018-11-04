@@ -49,7 +49,7 @@ async function onMessageInvite(message: DMessage) {
     const invitesInMessage: string[] = [];
     for (const word of message.content.split(" ")) {
         const matches = word.match(
-            /(?<=(discord\.gg\/|discordapp\.com\/invite\/|discord.me\/)).+/g
+            /(?<=(discord\.gg\/|discordapp\.com\/invite\/|discord.me\/|discord.io\/)).+/g
         );
         if (!matches) continue;
         invitesInMessage.push(matches[0]);
