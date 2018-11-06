@@ -16,7 +16,7 @@ export const InviteCommand: Command = {
                 {
                     name: "invite",
                     type: "string",
-                    required: true,
+                    required: false,
                     unlimited: true
                 }
             ])
@@ -28,8 +28,10 @@ export const InviteCommand: Command = {
             return message.fail();
         }
         if (action === "add") {
+            if (!invite) return message.fail();
             await getInviteHandler().addInvite(invite, message.guild);
         } else if (action === "remove") {
+            if (!invite) return message.fail();
             await getInviteHandler().removeInvite(invite, message.guild);
         } else {
             const words = await getInviteHandler().getInvites(message.guild);

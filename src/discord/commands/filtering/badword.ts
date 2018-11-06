@@ -17,7 +17,7 @@ export const BanCommand: Command = {
                 {
                     name: "word",
                     type: "string",
-                    required: true,
+                    required: false,
                     unlimited: true
                 }
             ])
@@ -29,8 +29,11 @@ export const BanCommand: Command = {
             return message.fail();
         }
         if (action === "add") {
+            if (!word) return message.fail();
+
             await getBadWordHandler().addWord(word, message.guild);
         } else if (action === "remove") {
+            if (!word) return message.fail();
             await getBadWordHandler().removeWord(word, message.guild);
         } else {
             const invites = await getBadWordHandler().getWords(message.guild);
