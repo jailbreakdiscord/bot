@@ -24,7 +24,7 @@ export const WarnpointsCommand: Command = {
             where: { id: member.id }
         });
         // prettier-ignore
-        await message.reply(`${member} has ${dbMember!.warnpoints} warnpoints.`);
+        await message.channel.send(`${member} has ${dbMember!.warnpoints} warnpoints.`);
         await message.success();
     }
 };
