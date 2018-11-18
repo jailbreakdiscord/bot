@@ -15,7 +15,7 @@ export const MuteCommand: Command = {
                 },
                 {
                     name: "duration",
-                    type: "number",
+                    type: "string",
                     required: true
                 },
                 {

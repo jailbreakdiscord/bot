@@ -17,7 +17,8 @@
   "dependencies": {
     "@types/node-cron": "^2.0.0",
     "dd-botkit": "^1.0.9-1",
-    "node-cron": "^2.0.3",
+    "node-cron": "^2.0.2",
+    "parse-duration": "^0.1.1",
     "pg": "^7.4.3",
     "typeorm": "^0.2.7"
   },

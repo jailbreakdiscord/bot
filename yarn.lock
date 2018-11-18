@@ -435,14 +435,15 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-node-cron@^2.0.3:
+node-cron@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/node-cron/-/node-cron-2.0.3.tgz#b9649784d0d6c00758410eef22fa54a10e3f602d"
+  integrity sha1-z1erF2yiTAOnw3HxqH+cCQwYMBk=
   dependencies:
     opencollective-postinstall "^2.0.0"
     tz-offset "0.0.1"
   prebuiltVariants:
-    node-cron-v2.0.3-linux-x64-59 "996354a34e0a090893269fb073f5942de4e9cc0e"
+    node-cron-v2.0.3-linux-x64-59 cf57ab176ca24c03a7c371f1a87f9c090c183019
 
 npm-run-path@^2.0.0:
   version "2.0.2"
@@ -503,6 +504,11 @@ packet-reader@0.3.1:
 parent-require@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/parent-require/-/parent-require-1.0.0.tgz#746a167638083a860b0eef6732cb27ed46c32977"
+
+parse-duration@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/parse-duration/-/parse-duration-0.1.1.tgz#13114ddc9891c1ecd280036244554de43647a226"
+  integrity sha1-ExFN3JiRwezSgANiRFVN5DZHoiY=
 
 parse5@^3.0.3:
   version "3.0.3"

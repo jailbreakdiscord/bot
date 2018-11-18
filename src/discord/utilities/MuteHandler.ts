@@ -5,6 +5,7 @@ import {
     RoleResolvable,
     Message
 } from "discord.js";
+import parse from "parse-duration";
 import { schedule } from "node-cron";
 import { GuildMember as DBGuildMember } from "../../database/entities/GuildMember";
 import { Guild as DBGuild } from "../../database/entities/Guild";
@@ -30,7 +31,7 @@ export class MuteHandler {
     /**
      *
      * @param member Member to be muted
-     * @param duration Duration in hours.
+     * @param duration Duration in minutes.
      */
     public async mute(
         message: Message,
@@ -45,6 +46,10 @@ export class MuteHandler {
             where: { id: member.guild.id }
         });
         if (!dbMember) await DBGuildMember.createOrUpdate(member, dbGuild!);
+
+        duration = Math.floor(parse(duration) / 60000); // parse to minutes
+        console.log(duration);
+
         await member.addRole(this.muteRole);
         await getPublicLogger().send({
             type: "mute",
@@ -54,7 +59,7 @@ export class MuteHandler {
             reason
         });
 
-        // Shorter equivalent of `valueOf` (return a Unix timestamp).
+        // Shorter equivalent of `valueOf` (returns a Unix timestamp).
         let unmuteAt = Math.floor(+new Date() / 1000);
 
         // Add minutes to the timestamp.
@@ -82,6 +87,8 @@ export class MuteHandler {
 
                 // Check if member should be unmuted
                 if (timestamp > +member.unmuteAt) {
+                    console.log("unmuting");
+
                     const dMember = await this.guild.fetchMember(member.id);
                     await dMember.removeRole(this.muteRole);
                     member.unmuteAt = 0;
