@@ -48,7 +48,12 @@ export const BanCommand: Command = {
                 .setTitle("Bad words")
                 .setDescription("All bad words on this server.")
                 // u200b is a ZWS
-                .addField("\u200b", invites.map((x) => `‣ ${x}`));
+                .addField(
+                    "\n\u200b",
+                    invites.length !== 0
+                        ? invites.map((x) => `‣ ${x}`)
+                        : "No bad words in this guild."
+                );
             await message.channel.send(embed);
         }
         await message.success();
