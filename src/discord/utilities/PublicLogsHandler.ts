@@ -34,11 +34,15 @@ export class PublicLogger {
                 this._client.user.username,
                 this._client.user.displayAvatarURL
             )
-            .setFooter(`case #${oldCase ? ++oldCase.case : 0}`)
+            .setFooter(
+                `case #${oldCase ? ++oldCase.case : 0} • ${
+                    options.member.user.id
+                }`
+            )
             .setTimestamp()
             .addField(
                 "Member",
-                `${options.member.user.tag} (${options.member.user.id})`
+                `${options.member.user.tag} (${options.member.user})`
             )
             .setThumbnail(options.member.user.displayAvatarURL)
             .addField("Reason", options.reason || "None provided.");
@@ -67,11 +71,21 @@ export class PublicLogger {
                     dbCase.type = "warn";
                     dbCase.points = (options as IWarnLoggerOption).points;
                     embed
-                        .setTitle("Member Warned")
+                        .setTitle(
+                            (options as IWarnLoggerOption).points < 0
+                                ? "Member unwarned"
+                                : "Member warned"
+                        )
                         .setColor("ORANGE")
                         .addField(
                             "Points",
-                            (options as IWarnLoggerOption).points
+                            // ensure that the points are positive
+                            Math.sqrt(
+                                Math.pow(
+                                    (options as IWarnLoggerOption).points,
+                                    2
+                                )
+                            )
                         );
                     break;
                 }

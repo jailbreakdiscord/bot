@@ -24,11 +24,14 @@ export const AnnounceCommand: Command = {
     handler: async (message, next) => {
         const [channel, role]: TextChannel | Role | any = message.args;
         await message.reply("Please provide an announcemnt.");
-        const announcement = await message.channel.awaitMessages((x) => x, {
-            max: 1,
-            time: 60 * 1000, // 1 minute.
-            errors: ["time"]
-        });
+        const announcement = await message.channel.awaitMessages(
+            (x) => x.author === message.author,
+            {
+                max: 1,
+                time: 60 * 1000, // 1 minute.
+                errors: ["time"]
+            }
+        );
         const pingRole = message.guild.roles.find((x) => x.name === role);
         if (!pingRole) return message.reply("Invalid role.");
         await pingRole.setMentionable(true);

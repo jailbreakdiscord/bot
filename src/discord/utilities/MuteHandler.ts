@@ -31,7 +31,7 @@ export class MuteHandler {
     /**
      *
      * @param member Member to be muted
-     * @param duration Duration in minutes.
+     * @param duration Duration.
      */
     public async mute(
         message: Message,
