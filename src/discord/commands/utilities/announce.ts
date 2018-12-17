@@ -24,6 +24,7 @@ export const AnnounceCommand: Command = {
     handler: async (message, next) => {
         const [channel, role]: TextChannel | Role | any = message.args;
         await message.reply("Please provide an announcemnt.");
+        // Only allow the original author to provide an announcement.
         const announcement = await message.channel.awaitMessages(
             (x) => x.author === message.author,
             {
