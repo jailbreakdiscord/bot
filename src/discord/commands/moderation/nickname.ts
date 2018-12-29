@@ -37,7 +37,7 @@ export const NicknameCommand: Command = {
             });
         }
 
-        await member.setNickname(nickname);
+        await member.setNickname(nickname as string);
         await msg.success();
     }
 };
