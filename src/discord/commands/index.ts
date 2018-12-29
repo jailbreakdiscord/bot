@@ -1,4 +1,4 @@
-import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
+import { Command, AccessLevel, CommandError, Logger, Guards, Commands } from "dd-botkit";
 
 import { User, Guild } from "../../database/entities";
 
