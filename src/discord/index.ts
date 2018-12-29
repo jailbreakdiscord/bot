@@ -2,13 +2,16 @@ import path from "path";
 import Application, { Constants } from "dd-botkit";
 
 import { Configuration } from "../Config";
+import { GuildPermissionSet } from "../database/entities/GuildPermissionSet";
 
 const config = Configuration.bot;
 export const app = new Application({
     token: config.token, 
     commandDirectory: path.resolve(__dirname, "commands"),
     ROLES: config.roles,
-    COMMAND_PREFIX: config.prefix
+    COMMAND_PREFIX: config.prefix,
+    permissionsEntity: GuildPermissionSet,
+    superuserCheck: id => config.superusers.includes(id)
 });
 
 export function startBot(): Promise<Application> {
