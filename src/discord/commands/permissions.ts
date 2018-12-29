@@ -55,7 +55,7 @@ const TargetModifier: (target: "role" | "member", state: "add" | "del") => Comma
         const permSet: GuildPermissionSet = message.data.permSet;
 
         // addTarget() or delTarget()
-        ids.forEach(id => permSet[state + "Target"](target, id));
+        permSet[state + "Target"](target, ...ids);
 
         await permSet.save();
         await message.success();
@@ -123,6 +123,9 @@ export const PermissionsCommands: Commands = {
                     ])
                 ]
             },
+            /**
+             * Creates a bare permission set
+             */
             handler: async (message, next) => {
                 const [name] = message.args;
                 const guild = message.guild.id;
@@ -165,6 +168,9 @@ export const PermissionsCommands: Commands = {
                     PermSetLoader
                 ]
             },
+            /**
+             * Returns a raw util.inspect() of the permission set
+             */
             handler: async (message, next) => {
                 const permSet: GuildPermissionSet = message.data.permSet;
 
