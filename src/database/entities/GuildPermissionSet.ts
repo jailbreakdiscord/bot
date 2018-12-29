@@ -100,10 +100,20 @@ export class GuildPermissionSet extends DBEntity implements PermissionSetEntity 
         this.negatedPermissions.remove(node);
     }
 
+    /**
+     * Add a role or member target
+     * @param type whether these are role or member ids
+     * @param IDs the ids
+     */
     public addTarget(type: "role" | "member", ...IDs: string[]) {
         this[type + "s"] = this[type + "s"].concat(IDs);
     }
 
+    /**
+     * Remove a role or member target
+     * @param type whether these are role or member ids
+     * @param IDs the ids
+     */
     public delTarget(type: "role" | "member", ...IDs: string[]) {
         IDs.forEach(id => this[type + "s"].remove(id));
     }
