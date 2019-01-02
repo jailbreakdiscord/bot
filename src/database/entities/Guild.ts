@@ -1,9 +1,9 @@
-import { Guild as DGuild } from "discord.js";
-import { Entity, Column, OneToMany, OneToOne, ManyToMany, ManyToOne, JoinColumn } from "typeorm";
 import { DBEntity } from "dd-botkit";
+import { Guild as DGuild } from "discord.js";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany } from "typeorm";
+import { GuildMember } from "./GuildMember";
 import { Message } from "./Message";
 import { User } from "./User";
-import { GuildMember } from "./GuildMember";
 
 /*
   TODO: 
@@ -12,7 +12,7 @@ import { GuildMember } from "./GuildMember";
 */
 @Entity()
 export class Guild extends DBEntity {
-    
+
     /**
      * Creates or updates a Discord Guild object.
      * @param discordGuild The discord.js guild object to represent in the database.
@@ -29,16 +29,16 @@ export class Guild extends DBEntity {
         guild.owner = await User.createOrUpdate(discordGuild.owner.user);
         return guild.save();
     }
-    /// The name of the guild
+
     @Column()
     public name: string;
 
-    @OneToOne((type) => User, (user) => user, { lazy: true })
+    @ManyToOne(type => User, user => user.ownedGuilds)
     @JoinColumn()
-    public owner: Promise<User> | User;
+    public owner: User;
 
     @OneToMany(type => Message, message => message.guild)
-    public messages: Promise<Message[]>;
+    public messages: Promise<Message[]> | Message[];
 
     @ManyToMany((type) => User, (user) => user.guilds, { lazy: true })
     public users: Promise<User[]> | User[];

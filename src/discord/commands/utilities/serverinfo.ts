@@ -1,17 +1,13 @@
-import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
+import { AccessLevel, Command, Constants } from "dd-botkit";
 import { RichEmbed } from "discord.js";
 export const ServerInfoCommand: Command = {
     opts: {
         name: "serverinfo",
         access: AccessLevel.EVERYONE,
         category: "Utilities",
-        guards: [
-            Guards.Argumented(
-                "serverinfo",
-                "Fetch general information about the server.",
-                []
-            )
-        ]
+        usage: {
+            description: "Fetch general information about the server."
+        }
     },
     handler: async (message, next) => {
         const guild = message.guild;

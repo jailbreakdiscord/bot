@@ -1,15 +1,17 @@
-import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
+import { AccessLevel, BotPermissions, Command } from "dd-botkit";
+import { GuildMember } from "discord.js";
 
 export const KickCommand: Command = {
     opts: {
         name: "kick",
         access: AccessLevel.MODERATOR,
         category: "Moderation",
-        guards: [
-            Guards.Argumented("kick", "Kicks a user", [
+        usage: {
+            description: "Kicks a member",
+            args: [
                 {
-                    name: "user",
-                    type: "user",
+                    name: "member",
+                    type: "member",
                     required: true
                 },
                 {
@@ -18,13 +20,20 @@ export const KickCommand: Command = {
                     required: false,
                     unlimited: true
                 }
-            ])
+            ]
+        },
+        guards: [
+            BotPermissions("KICK_MEMBERS")
         ]
     },
     handler: async (msg, next) => {
-        const [user, reason] = msg.args;
+        const [member, ...reason] = msg.args as [GuildMember] & string[];
 
-        // prettier-ignore
-        await msg.reply(`And this is the point where I'd usually kick <@${(user as any).id}> for ${reason || "no reason"} but i'm in debug mode.`);
+        const reasonStr = reason.length > 0 ? ` (note: ${reason.join(" ")})` : "";
+
+        const auditLog = `Authorized by ${msg.member.id}${reasonStr}`;
+
+        await member.kick(auditLog);
+        await msg.success();
     }
 };

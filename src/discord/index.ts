@@ -1,18 +1,19 @@
-import path from "path";
 import Application, { Constants } from "dd-botkit";
-
+import path from "path";
 import { Configuration } from "../Config";
 import { GuildPermissionSet } from "../database/entities/GuildPermissionSet";
 
 const config = Configuration.bot;
 export const app = new Application({
-    token: config.token, 
+    token: config.token,
     commandDirectory: path.resolve(__dirname, "commands"),
     ROLES: config.roles,
     COMMAND_PREFIX: config.prefix,
     permissionsEntity: GuildPermissionSet,
     superuserCheck: id => config.superusers.includes(id)
 });
+
+process.on('unhandledRejection', console.error);
 
 export function startBot(): Promise<Application> {
     Constants.applyPatches({

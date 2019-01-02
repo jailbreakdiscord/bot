@@ -1,8 +1,8 @@
-import { User as DUser } from "discord.js";
 import { DBEntity } from "dd-botkit";
-import { Entity, Column, OneToMany, ManyToMany } from "typeorm";
-import { Message } from "./Message";
+import { User as DUser } from "discord.js";
+import { Column, Entity, ManyToMany, OneToMany } from "typeorm";
 import { Guild } from "./Guild";
+import { Message } from "./Message";
 
 @Entity()
 export class User extends DBEntity {
@@ -25,17 +25,18 @@ export class User extends DBEntity {
         return user.save();
     }
 
-    /// The user's discord username
     @Column()
     public username: string;
 
-    /// The user's discord discriminator
     @Column()
     public discriminator: string;
 
     @OneToMany((type) => Message, (message) => message.author, { lazy: true })
-    public messages: Promise<Message[]> | Message;
+    public messages: Promise<Message[]>;
 
     @ManyToMany((type) => Guild, (guild) => guild.users, { lazy: true })
     public guilds: Promise<Guild[]>;
+
+    @OneToMany(type => Guild, guild => guild.owner, { lazy: true })
+    public ownedGuilds: Promise<Guild[]> | Guild[];
 }
