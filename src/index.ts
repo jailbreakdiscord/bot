@@ -9,7 +9,7 @@ import "./types";
 // tslint:disable-next-line
 connect()
     .then(() => startBot())
-    // .then((app) => app.commandSystem.loadCommands(GroupManager).then(() => app.commandSystem.loadCommands(Essentials)).then(() => app))
+    .then((app) => app.commandSystem.loadCommands(GroupManager).then(() => app.commandSystem.loadCommands(Essentials)).then(() => app))
     .then((app) => {
         // Bind event handlers
         bindEventHandlersToClient(app.client);
