@@ -1,6 +1,6 @@
-import { Message as DMessage } from "discord.js";
-import { Entity, Column, ManyToOne, Index } from "typeorm";
 import { DBEntity } from "dd-botkit";
+import { Message as DMessage } from "discord.js";
+import { Column, Entity, ManyToOne } from "typeorm";
 import { Guild } from "./Guild";
 import { User } from "./User";
 

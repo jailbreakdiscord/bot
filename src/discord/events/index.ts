@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
-
-import * as MessageEvent from "./message";
 import * as GuildEvent from "./guild";
+import * as MessageEvent from "./message";
+
 
 export function bindEventHandlersToClient(client: Client) {
     // Message Events

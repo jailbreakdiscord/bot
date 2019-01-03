@@ -1,41 +1,31 @@
-import { Command, AccessLevel, Guards, Constants } from "dd-botkit";
-import { RichEmbed, User, GuildMember } from "discord.js";
-export const KickCommand: Command = {
+import { Command, Constants } from "dd-botkit";
+import { GuildMember, RichEmbed } from "discord.js";
+export const UserInfoCommand: Command = {
     opts: {
         name: "userinfo",
-        access: AccessLevel.MODERATOR,
+        // access: AccessLevel.MODERATOR,
         category: "Moderation",
-        guards: [
-            Guards.Argumented(
-                "userinfo",
-                "Fetch general information about a member.",
-                [
-                    {
-                        name: "member",
-                        type: "user",
-                        required: false
-                    }
-                ]
-            )
-        ]
+        usage: {
+            description: "Fetch general information about a member.",
+            args: [
+                {
+                    name: "user",
+                    type: "member",
+                    required: false
+                }
+            ]
+        }
     },
     handler: async (message, next) => {
         // Define constants for ease of accesss.
         const client = message.client;
         const guild = message.guild;
 
-        // TODO: change type from any to User.
-        // Simple hack to avoid TypeErrors
-        const [_user]: any | User = message.args;
-        let user: User;
-        let member: GuildMember;
-        if (!_user) {
-            user = message.author;
-            member = message.member;
-        } else {
-            user = _user;
-            member = message.guild.members.get(_user.id)!;
-        }
+        let [ member ] = message.args as [GuildMember | undefined];
+        member = member || message.member;
+
+        const { user } = member;
+
         const embed = new RichEmbed()
             .setAuthor(client.user.username, client.user.displayAvatarURL)
             .setFooter(Constants.BOT_AUTHOR)

@@ -1,18 +1,14 @@
 // Disable TSLint for now, as these blocks are empty
 /* tslint:disable */
 
-import { 
-    Guild as DGuild, 
-    User as DUser,
-    GuildMember as DMember
-} from "discord.js";
-
-import { Guild } from "../../database/entities";
 import { Logger } from "dd-botkit";
+import { Guild as DGuild, GuildMember as DMember, User as DUser } from "discord.js";
+import { Guild } from "../../database/entities";
+
 
 export async function guildCreate(guild: DGuild) {
     const dbGuild = await Guild.createOrUpdate(guild);
-    Logger.log(`Added guild (${dbGuild.id}) to the database.`);
+    Logger.info(`Added guild (${dbGuild.id}) to the database.`);
 }
 
 export function guildDelete(guild: DGuild) {}

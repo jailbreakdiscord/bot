@@ -9,7 +9,8 @@
     "rules": {
         "ordered-imports": false,
         "object-literal-sort-keys": false,
-        "no-console": false
+        "no-console": false,
+        "interface-name": false
     },
     "rulesDirectory": []
 }

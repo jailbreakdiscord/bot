@@ -1,30 +1,27 @@
-import { Command, AccessLevel, CommandError, Logger, Guards } from "dd-botkit";
-import { User, GuildMember } from "discord.js";
 import { oneLine } from "common-tags";
+import { AccessLevel, Command } from "dd-botkit";
+import { GuildMember, User } from "discord.js";
 export const KickCommand: Command = {
     opts: {
         name: "advdev",
         access: AccessLevel.ADMIN,
         category: "Utilities",
-        guards: [
-            Guards.Argumented(
-                "advdev",
-                "Decline or accept a user to advanced developer.",
-                [
-                    {
-                        name: "Decline or accept",
-                        type: "boolean",
-                        required: true
-                    },
-                    {
-                        name: "user",
-                        type: "user",
-                        required: true,
-                        unlimited: true
-                    }
-                ]
-            )
-        ]
+        usage: {
+            description: "Decline or accept a user to advanced deloper.",
+            args: [
+                {
+                    name: "Decline or accept",
+                    type: "boolean",
+                    required: true
+                },
+                {
+                    name: "user",
+                    type: "user",
+                    required: true,
+                    unlimited: true
+                }
+            ]
+        }
     },
     handler: async (msg, next) => {
         if (

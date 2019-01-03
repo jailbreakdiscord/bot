@@ -1,20 +1,6 @@
-import {
-    User as DUser,
-    Guild as DGuild,
-    GuildMember as DGuildMember
-} from "discord.js";
 import { DBEntity } from "dd-botkit";
-import {
-    Entity,
-    Column,
-    JoinColumn,
-    OneToMany,
-    ManyToMany,
-    OneToOne,
-    ManyToOne,
-    Index
-} from "typeorm";
-import { Message } from "./Message";
+import { GuildMember as DGuildMember } from "discord.js";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 import { Guild } from "./Guild";
 import { User } from "./User";
 
