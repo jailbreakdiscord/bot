@@ -1,0 +1,31 @@
+{
+  "name": "jailbreakbot",
+  "version": "1.0.0",
+  "description": "A general purpose bot built for the /r/jailbreak discord.",
+  "main": "dist/index.js",
+  "repository": "git@github.com:jailbreakdiscord/bot.git",
+  "author": "Jailbreak Discord Staff",
+  "license": "GPL-3.0",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc -p .",
+    "dev": "yarn lint-and-fix && yarn build && yarn start",
+    "lint": "tslint -p .",
+    "lint-and-fix": "tslint -p . --fix"
+  },
+  "private": false,
+  "dependencies": {
+    "@types/common-tags": "^1.4.0",
+    "common-tags": "^1.8.0",
+    "dd-botkit": "1.0.50",
+    "pg": "^7.4.3",
+    "typeorm": "^0.2.7"
+  },
+  "devDependencies": {
+    "prettier": "^1.14.3",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.0.3"
+  }
+}
