@@ -1,11 +1,11 @@
-import { AccessLevel, BotPermissions, Command } from "dd-botkit";
+import { Command } from "dd-botkit";
 import { GuildMember } from "discord.js";
 
 export const KickCommand: Command = {
     opts: {
         name: "kick",
-        access: AccessLevel.MODERATOR,
         category: "Moderation",
+        botPermissions: ["KICK_MEMBERS"],
         usage: {
             description: "Kicks a member",
             args: [
@@ -22,9 +22,7 @@ export const KickCommand: Command = {
                 }
             ]
         },
-        guards: [
-            BotPermissions("KICK_MEMBERS")
-        ]
+        node: "moderation.kick"
     },
     handler: async (msg, next) => {
         const [member, ...reason] = msg.args as [GuildMember] & string[];

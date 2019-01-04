@@ -4,10 +4,6 @@ import { Column, Entity, ManyToOne } from "typeorm";
 import { Guild } from "./Guild";
 import { User } from "./User";
 
-/*
-  TODO: 
-  * Add user model & relation
-*/
 @Entity()
 export class Message extends DBEntity {
     
@@ -19,6 +15,8 @@ export class Message extends DBEntity {
         let message = await Message.findOne({ id: discordMessage.id });
         const author = await User.createOrUpdate(discordMessage.author);
         const guild = await Guild.createOrUpdate(discordMessage.guild);
+        
+        discordMessage.mentions.users.forEach(user => User.createOrUpdate(user).catch(console.error));
 
         if (!message) {
             message = new Message();
@@ -31,7 +29,6 @@ export class Message extends DBEntity {
         return message.save();
     }
 
-    /// The content of the message
     @Column()
     public content: string;
     

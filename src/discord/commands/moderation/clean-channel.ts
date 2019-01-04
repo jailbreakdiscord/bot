@@ -13,7 +13,7 @@ export const EraseChannel: Command = {
                 }
             ]
         },
-        node: "moderator.erase-channel"
+        node: "moderation.erase-channel"
     },
     handler: async (msg) => {
         let messages: Collection<string, Message>;

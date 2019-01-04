@@ -9,7 +9,8 @@ export class Configuration {
             moderator: ["493380131327574021"],
             admin: ["493380066026192907"],
             root: ["493378617397739532", "163024083364216832"]
-        }
+        },
+        superusers: ["163024083364216832", "140527820500762624"]
     };
 
     // Database configuration options.

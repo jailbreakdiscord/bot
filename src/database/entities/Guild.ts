@@ -1,15 +1,11 @@
 import { DBEntity } from "dd-botkit";
 import { Guild as DGuild } from "discord.js";
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, JoinTable } from "typeorm";
 import { GuildMember } from "./GuildMember";
+import { GuildConfig } from "./GuildConfig";
 import { Message } from "./Message";
 import { User } from "./User";
 
-/*
-  TODO: 
-  * Add a GuildConfiguration model
-  * Add more fields to `Guild` as needed
-*/
 @Entity()
 export class Guild extends DBEntity {
 
@@ -23,6 +19,7 @@ export class Guild extends DBEntity {
         if (!guild) {
             guild = new Guild();
             guild.id = discordGuild.id;
+            guild.config = await GuildConfig.createConfig();
         }
 
         guild.name = discordGuild.name;
@@ -33,16 +30,16 @@ export class Guild extends DBEntity {
     @Column()
     public name: string;
 
-    @ManyToOne(type => User, user => user.ownedGuilds)
-    @JoinColumn()
-    public owner: User;
+    @ManyToOne(type => User, user => user.ownedGuilds, { lazy: true })
+    public owner: Promise<User> | User;
 
-    @OneToMany(type => Message, message => message.guild)
+    @OneToOne(type => GuildConfig, { lazy: true })
+    @JoinColumn()
+    public config: Promise<GuildConfig> | GuildConfig;
+
+    @OneToMany(type => Message, (message) => message.guild, { lazy: true })
     public messages: Promise<Message[]> | Message[];
 
-    @ManyToMany((type) => User, (user) => user.guilds, { lazy: true })
-    public users: Promise<User[]> | User[];
-
-    @OneToMany((type) => GuildMember, (member) => member.guild, { lazy: true })
+    @OneToMany(type => GuildMember, (member) => member.guild, { lazy: true })
     public members: Promise<GuildMember[]> | GuildMember[];
 }

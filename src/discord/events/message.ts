@@ -1,12 +1,12 @@
 import { Logger } from "dd-botkit";
 import { Message as DMessage } from "discord.js";
 import { Guild, Message } from "../../database/entities";
-
+import { GuildMember } from "../../database/entities/GuildMember";
 
 export async function onMessage(message: DMessage) {
-    const dbGuild = await Guild.createOrUpdate(message.guild);
-    Logger.info(`Added guild (${dbGuild.id}) to the database.`);
+    // FIXME: Horrible hack to compensate for a race condition.
+    if (message.isCommand) return; // let the global guard save the message
 
-    const dbMessage = await Message.createOrUpdate(message);
-    Logger.info(`Added message (${dbMessage.id}) to the database.`);
+    await Message.createOrUpdate(message);
+    if (message.member) await GuildMember.createOrUpdate(message.member, { id: message.member.guild.id } as Guild);
 }

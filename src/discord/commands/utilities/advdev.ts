@@ -1,10 +1,10 @@
 import { oneLine } from "common-tags";
-import { AccessLevel, Command } from "dd-botkit";
+import { Command } from "dd-botkit";
 import { GuildMember, User } from "discord.js";
-export const KickCommand: Command = {
+
+export const AdvancedDevCommand: Command = {
     opts: {
         name: "advdev",
-        access: AccessLevel.ADMIN,
         category: "Utilities",
         usage: {
             description: "Decline or accept a user to advanced deloper.",
@@ -21,7 +21,8 @@ export const KickCommand: Command = {
                     unlimited: true
                 }
             ]
-        }
+        },
+        node: "jbdiscord.advanced-dev"
     },
     handler: async (msg, next) => {
         if (

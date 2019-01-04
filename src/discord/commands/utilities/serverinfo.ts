@@ -1,13 +1,13 @@
-import { AccessLevel, Command, Constants } from "dd-botkit";
+import { Command, Constants } from "dd-botkit";
 import { RichEmbed } from "discord.js";
 export const ServerInfoCommand: Command = {
     opts: {
         name: "serverinfo",
-        access: AccessLevel.EVERYONE,
         category: "Utilities",
         usage: {
             description: "Fetch general information about the server."
-        }
+        },
+        node: "util.serverinfo"
     },
     handler: async (message, next) => {
         const guild = message.guild;

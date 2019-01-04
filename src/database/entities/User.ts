@@ -1,6 +1,6 @@
 import { DBEntity } from "dd-botkit";
 import { User as DUser } from "discord.js";
-import { Column, Entity, ManyToMany, OneToMany } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, JoinTable } from "typeorm";
 import { Guild } from "./Guild";
 import { Message } from "./Message";
 
@@ -21,6 +21,8 @@ export class User extends DBEntity {
 
         user.username = discordUser.username;
         user.discriminator = discordUser.discriminator;
+        user.avatarURL = discordUser.avatarURL;
+        user.isBot = discordUser.bot;
 
         return user.save();
     }
@@ -31,11 +33,14 @@ export class User extends DBEntity {
     @Column()
     public discriminator: string;
 
-    @OneToMany((type) => Message, (message) => message.author, { lazy: true })
-    public messages: Promise<Message[]>;
+    @Column({ nullable: true })
+    public avatarURL?: string;
 
-    @ManyToMany((type) => Guild, (guild) => guild.users, { lazy: true })
-    public guilds: Promise<Guild[]>;
+    @Column()
+    public isBot: boolean;
+
+    @OneToMany((type) => Message, (message) => message.author, { lazy: true })
+    public messages: Promise<Message[]> | Message[];
 
     @OneToMany(type => Guild, guild => guild.owner, { lazy: true })
     public ownedGuilds: Promise<Guild[]> | Guild[];

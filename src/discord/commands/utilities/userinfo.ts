@@ -3,7 +3,6 @@ import { GuildMember, RichEmbed } from "discord.js";
 export const UserInfoCommand: Command = {
     opts: {
         name: "userinfo",
-        // access: AccessLevel.MODERATOR,
         category: "Moderation",
         usage: {
             description: "Fetch general information about a member.",
@@ -14,7 +13,8 @@ export const UserInfoCommand: Command = {
                     required: false
                 }
             ]
-        }
+        },
+        node: "util.userinfo"
     },
     handler: async (message, next) => {
         // Define constants for ease of accesss.

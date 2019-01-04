@@ -1,9 +1,8 @@
-import { AccessLevel, Command, CommandError } from "dd-botkit";
+import { Command, CommandError } from "dd-botkit";
 
 export const NicknameCommand: Command = {
     opts: {
         name: "nickname",
-        access: AccessLevel.MODERATOR,
         category: "Moderation",
         usage: {
             description: "Force changes the nickname of a user",
@@ -19,7 +18,8 @@ export const NicknameCommand: Command = {
                     required: true
                 }
             ]
-        }
+        },
+        node: "moderation.change-nickname"
     },
     handler: async (msg, next) => {
         const [user, nickname] = msg.args;
