@@ -1,5 +1,4 @@
 import { Command } from "dd-botkit";
-import { Collection, Message, TextChannel } from "discord.js";
 
 export const SetPrefix: Command = {
     opts: {
